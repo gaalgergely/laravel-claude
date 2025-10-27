@@ -19,6 +19,12 @@ class HttpClaudeClient implements ClaudeClientContract
             ])
             ->timeout($config['timeout'])
             ->retry($config['retries'])
+            /**
+             * @todo temporary fix!
+             */
+            ->withOptions([
+                'verify' => false
+            ])
             ->post('', [
                 'model' => $config['model'],
                 'max_tokens' => 800,
