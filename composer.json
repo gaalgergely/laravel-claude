@@ -1,0 +1,40 @@
+{
+    "name": "gaalgergely/laravel-claude",
+    "description": "Connector for Claude API",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Gaalgergely\\LaravelClaude\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gaál Gergely",
+            "email": "gaalgergely@yahoo.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^3.0",
+        "laravel/pint": "^1.0",
+        "phpstan/phpstan": "^2.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gaalgergely\\LaravelClaude\\LaravelClaudeServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "lint": "pint",
+        "analyse": "phpstan analyse"
+  }
+}
