@@ -1,9 +1,9 @@
 <?php
 
-namespace Gaalgergely\LaravelClaude\Clients;
+namespace GergelyGaal\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
-use Gaalgergely\LaravelClaude\Contracts\ClaudeClientContract;
+use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
 
 class HttpClaudeClient implements ClaudeClientContract
 {

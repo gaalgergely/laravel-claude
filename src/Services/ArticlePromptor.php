@@ -1,8 +1,8 @@
 <?php
 
-namespace Gaalgergely\LaravelClaude\Services;
+namespace GergelyGaal\LaravelClaude\Services;
 
-use Gaalgergely\LaravelClaude\Contracts\ClaudeClientContract;
+use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
 
 class ArticlePromptor
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gaalgergely\LaravelClaude\Contracts;
+namespace GergelyGaal\LaravelClaude\Contracts;
 
 interface ClaudeClientContract
 {

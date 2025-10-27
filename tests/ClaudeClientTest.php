@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Http;
-use Gaalgergely\LaravelClaude\Clients\HttpClaudeClient;
+use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
 
 it('returns generated text from Claude', function () {
     Http::fake([

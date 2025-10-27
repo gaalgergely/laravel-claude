@@ -16,18 +16,18 @@
   },
   "autoload": {
     "psr-4": {
-      "Gaalgergely\\LaravelClaude\\": "src/"
+      "GergelyGaal\\LaravelClaude\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Gaalgergely\\LaravelClaude\\Tests\\": "tests/"
+      "GergelyGaal\\LaravelClaude\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Gaalgergely\\LaravelClaude\\ClaudeServiceProvider"
+        "GergelyGaal\\LaravelClaude\\ClaudeServiceProvider"
       ]
     }
   },

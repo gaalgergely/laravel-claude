@@ -1,6 +1,6 @@
 <?php
 
-namespace Gaalgergely\LaravelClaude;
+namespace GergelyGaal\LaravelClaude;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -12,14 +12,14 @@ class ClaudeServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-claude')
             ->hasConfigFile()
-            ->hasCommand(\Gaalgergely\LaravelClaude\Commands\GenerateArticleCommand::class);
+            ->hasCommand(\GergelyGaal\LaravelClaude\Commands\GenerateArticleCommand::class);
     }
 
     public function registeringPackage(): void
     {
         $this->app->bind(
-            \Gaalgergely\LaravelClaude\Contracts\ClaudeClientContract::class,
-            \Gaalgergely\LaravelClaude\Clients\HttpClaudeClient::class
+            \GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract::class,
+            \GergelyGaal\LaravelClaude\Clients\HttpClaudeClient::class
         );
     }
 }

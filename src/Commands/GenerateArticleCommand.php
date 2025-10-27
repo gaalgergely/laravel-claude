@@ -1,9 +1,9 @@
 <?php
 
-namespace Gaalgergely\LaravelClaude\Commands;
+namespace GergelyGaal\LaravelClaude\Commands;
 
 use Illuminate\Console\Command;
-use Gaalgergely\LaravelClaude\Services\ArticlePromptor;
+use GergelyGaal\LaravelClaude\Services\ArticlePromptor;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
