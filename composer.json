@@ -1,6 +1,6 @@
 {
   "name": "gaalgergely/laravel-claude",
-  "description": "Laravel package to generate article drafts via Claude (Anthropic)",
+  "description": "Connector for Claude API (Anthropic)",
   "type": "library",
   "license": "MIT",
   "require": {
