@@ -125,18 +125,11 @@ class HttpClaudeClient implements ClaudeClientContract
          *  @todo fix downloadable to be TRUE
         */
 
-        return (Http::attach([
-                [
-                    'name' => 'file',
-                    'filename' => 'test.pdf',
-                    //Storage::readStream('test.pdf'), 'test.pdf',
-                    'contents' => Storage::get('test.pdf')
-                ],
-                [
-                    'name' => 'downloadable',
-                    'contents' => true
-                ]
-            ])
+        return (Http::attach(
+                'file',
+                Storage::readStream('test.pdf'),
+                'test.pdf'
+            )
             ->withHeaders([
                 'x-api-key' => $this->config['api_key'],
                 'anthropic-version' => '2023-06-01', // @todo move to config
@@ -156,7 +149,10 @@ class HttpClaudeClient implements ClaudeClientContract
                 ]*/
             ])
             //->asMultipart()
-            ->post($this->config['base_url'] . '/files')->throw())->json();
+            ->post($this->config['base_url'] . '/files', [
+                'downloadable' => 'true',
+                'purpose' => 'user_uploaded'
+            ])->throw())->json();
 
         /*return ($this->client
             /**
