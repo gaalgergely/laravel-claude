@@ -121,12 +121,21 @@ class HttpClaudeClient implements ClaudeClientContract
             throw new \RuntimeException('Failed to open file.');
         }*/
 
-        return (Http::attach(
-            'file',
-            //Storage::readStream('test.pdf'), 'test.pdf',
-            Storage::get('test.pdf'), 'test.pdf',
-            [
-                'Content-Type' => 'application/pdf'
+        /**
+         *  @todo fix downloadable to be TRUE
+        */
+
+        return (Http::attach([
+                [
+                    'name' => 'file',
+                    'filename' => 'test.pdf',
+                    //Storage::readStream('test.pdf'), 'test.pdf',
+                    'contents' => Storage::get('test.pdf')
+                ],
+                [
+                    'name' => 'downloadable',
+                    'contents' => true
+                ]
             ])
             ->withHeaders([
                 'x-api-key' => $this->config['api_key'],
@@ -141,8 +150,12 @@ class HttpClaudeClient implements ClaudeClientContract
              * @todo remove temporary fix! or config? -> log if disabled?
              */
             ->withOptions([
-                'verify' => false
+                'verify' => false,
+                /*'json' => [
+                    'downloadable' => true
+                ]*/
             ])
+            //->asMultipart()
             ->post($this->config['base_url'] . '/files')->throw())->json();
 
         /*return ($this->client
@@ -165,7 +178,13 @@ class HttpClaudeClient implements ClaudeClientContract
         return ($this->client->get("/files/$fileId")->throw())->json();
     }
 
-    public function downloadFile() {}
+    public function downloadFile(string $fileId) :string
+    {
+        return ($this->client->get("/files/$fileId/content")->throw())->stream();
+    }
 
-    public function deleteFile() {}
+    public function deleteFile(string $fileId) :array
+    {
+        return ($this->client->delete("/files/$fileId")->throw())->json();
+    }
 }

@@ -42,4 +42,14 @@ class Claude
     {
         return $this->client->getFileMetadata($fileId);
     }
+
+    public function downloadFile(string $fileId): string
+    {
+        return $this->client->downloadFile($fileId);
+    }
+
+    public function deleteFile(string $fileId): array
+    {
+        return $this->client->deleteFile($fileId);
+    }
 }
