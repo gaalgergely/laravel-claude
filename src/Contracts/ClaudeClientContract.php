@@ -2,9 +2,11 @@
 
 namespace GergelyGaal\LaravelClaude\Contracts;
 
+use GergelyGaal\LaravelClaude\DTOs\MessagesPayload;
+
 interface ClaudeClientContract
 {
-    public function sendMessages(string $prompt): array;
+    public function sendMessages(array $messages): array;
 
     public function countMessageTokens(string $prompt): array;
 

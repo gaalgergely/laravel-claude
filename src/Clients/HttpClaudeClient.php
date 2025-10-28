@@ -37,16 +37,10 @@ class HttpClaudeClient implements ClaudeClientContract
      * @todo improve return value
      * @todo change the model dynamically
      */
-    public function sendMessages(string $prompt) :array
+    public function sendMessages(array $messages) :array
     {
         return ($this->client
-            ->post('/messages', [
-                'model' => $this->config['model'],
-                'max_tokens' => 800, // @todo move to config
-                'messages' => [
-                    ['role' => 'user', 'content' => $prompt],
-                ],
-            ])
+            ->post('/messages', $messages)
             ->throw())->json();
     }
 

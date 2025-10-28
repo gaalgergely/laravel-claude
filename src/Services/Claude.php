@@ -3,14 +3,20 @@
 namespace GergelyGaal\LaravelClaude\Services;
 
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
+use GergelyGaal\LaravelClaude\DTOs\Message;
+use GergelyGaal\LaravelClaude\DTOs\MessagesPayload;
+
+/**
+ * @todo Test Claude Facade ...
+ */
 
 class Claude
 {
     public function __construct(private ClaudeClientContract $client) {}
 
-    public function sendMessages(string $topic): array
+    public function sendMessages(array $messages): array
     {
-        return $this->client->sendMessages($topic);
+        return $this->client->sendMessages($messages);
     }
 
     public function countMessageTokens(string $topic): array
