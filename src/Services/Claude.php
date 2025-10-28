@@ -10,27 +10,36 @@ class Claude
 
     public function sendMessages(string $topic): array
     {
-        //$prompt = "Write a Medium-style article about {$topic}. Tone: clear, practical.";
-        //return $this->client->generate($prompt);
-
         return $this->client->sendMessages($topic);
     }
 
     public function countMessageTokens(string $topic): array
     {
-
         return $this->client->countMessageTokens($topic);
     }
 
     public function listModels(): array
     {
-
         return $this->client->listModels();
     }
 
     public function getModel(string $model): array
     {
-
         return $this->client->getModel($model);
+    }
+
+    public function createFile() : array
+    {
+        return $this->client->createFile();
+    }
+
+    public function listFiles(): array
+    {
+        return $this->client->listFiles();
+    }
+
+    public function getFileMetadata(string $fileId): array
+    {
+        return $this->client->getFileMetadata($fileId);
     }
 }

@@ -11,4 +11,10 @@ interface ClaudeClientContract
     public function listModels() :array;
 
     public function getModel(string $model) :array;
+
+    public function createFile() : array;
+
+    public function listFiles() :array;
+
+    public function getFileMetadata(string $fileId) :array;
 }
