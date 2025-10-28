@@ -38,13 +38,7 @@ class HttpClaudeClient implements ClaudeClientContract
                 ]
             ])
             ->timeout($this->config['timeout'])
-            ->retry($this->config['retries'])
-            /**
-             * @todo remove temporary fix! or config? -> log if disabled?
-             */
-            ->withOptions([
-                'verify' => false
-            ]);
+            ->retry($this->config['retries']);
     }
 
     /**
