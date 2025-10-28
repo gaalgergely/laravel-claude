@@ -28,9 +28,9 @@ class Claude
         return $this->client->getModel($model);
     }
 
-    public function createFile() : array
+    public function createFile(array $file) : array
     {
-        return $this->client->createFile();
+        return $this->client->createFile($file);
     }
 
     public function listFiles(): array

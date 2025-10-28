@@ -12,7 +12,7 @@ interface ClaudeClientContract
 
     public function getModel(string $model) :array;
 
-    public function createFile() : array;
+    public function createFile(array $file) : array;
 
     public function listFiles() :array;
 
