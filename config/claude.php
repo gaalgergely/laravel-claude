@@ -1,9 +1,11 @@
 <?php
 
 return [
-    'api_key' => env('CLAUDE_API_KEY'),
+    'base_url' => env('CLAUDE_BASE_URL', 'https://api.anthropic.com/v1'),
+    'api_key' => env('CLAUDE_API_KEY', null),
+    'anthropic_version' => env('CLAUDE_ANTHROPIC_VERSION', '2023-06-01'),
     'model' => env('CLAUDE_MODEL', 'claude-sonnet-4-5-20250929'),
-    'base_url' => 'https://api.anthropic.com/v1',
+    'max_tokens' => env('CLAUDE_MAX_TOKENS', 1024),
     'timeout' => 15,
-    'retries' => 2,
+    'retries' => 1, //2
 ];

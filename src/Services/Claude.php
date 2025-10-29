@@ -19,9 +19,9 @@ class Claude
         return $this->client->sendMessages($messages);
     }
 
-    public function countMessageTokens(string $topic): array
+    public function countMessageTokens(array $messages): array
     {
-        return $this->client->countMessageTokens($topic);
+        return $this->client->countMessageTokens($messages);
     }
 
     public function listModels(): array
@@ -32,6 +32,21 @@ class Claude
     public function getModel(string $model): array
     {
         return $this->client->getModel($model);
+    }
+
+    public function createMessageBatch(array $messageBatch): array
+    {
+        return $this->client->createMessageBatch($messageBatch);
+    }
+
+    public function retrieveMessageBatch(string $messageBatchId): array
+    {
+        return $this->client->retrieveMessageBatch($messageBatchId);
+    }
+
+    public function retrieveMessageBatchResults(string $messageBatchId): array
+    {
+        return $this->client->retrieveMessageBatchResults($messageBatchId);
     }
 
     public function createFile(array $file) : array

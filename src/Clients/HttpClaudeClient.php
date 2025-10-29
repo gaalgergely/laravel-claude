@@ -4,61 +4,36 @@ namespace GergelyGaal\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
+use GuzzleHttp\Psr7\StreamWrapper;
 
 class HttpClaudeClient implements ClaudeClientContract
 {
     private $client;
 
-    /**
-     * @todo double check ...
-     */
-    private $config;
-
     public function __construct()
     {
-        /**
-         * @todo duplicated code fragment
-         */
-        $this->config = config('claude');
+        $config = config('claude');
 
-        $this->client = Http::baseUrl($this->config['base_url'])
+        $this->client = Http::baseUrl($config['base_url'])
             ->withHeaders([
-                'x-api-key' => $this->config['api_key'],
-                'anthropic-version' => '2023-06-01', // @todo move to config
+                'x-api-key' => $config['api_key'],
+                'anthropic-version' => $config['anthropic_version'],
             ])
-            ->timeout($this->config['timeout'])
-            ->retry($this->config['retries']);
+            ->timeout($config['timeout'])
+            ->retry($config['retries']);
     }
 
     /**
      * @note Messages
-     * @todo implement image or file uploads
-     * @todo change parameter to array (Message DTO)
-     * @todo improve return value
-     * @todo change the model dynamically
      */
     public function sendMessages(array $messages) :array
     {
-        return ($this->client
-            ->post('/messages', $messages)
-            ->throw())->json();
+        return ($this->client->post('/messages', $messages)->throw())->json();
     }
 
-    /**
-     * @todo implement image or file uploads
-     * @todo change parameter to array (Message DTO)
-     * @todo change the model dynamically
-     */
-    public function countMessageTokens(string $prompt)  :array
+    public function countMessageTokens(array $messages)  :array
     {
-        return ($this->client
-            ->post('/messages/count_tokens', [
-                'model' => $this->config['model'],
-                'messages' => [
-                    ['role' => 'user', 'content' => $prompt],
-                ],
-            ])
-            ->throw())->json();
+        return ($this->client->post('/messages/count_tokens', $messages)->throw())->json();
     }
 
     /**
@@ -79,9 +54,37 @@ class HttpClaudeClient implements ClaudeClientContract
     /**
      * Message Batches
      */
-    public function createMessageBatch() {}
+    public function createMessageBatch(array $messageBatch) :array
+    {
+        return ($this->client->post('/messages/batches', ['requests' => $messageBatch])->throw())->json();
+    }
 
-    public function retrieveMessageBatch() {}
+    public function retrieveMessageBatch(string $messageBatchId) :array
+    {
+        return ($this->client->get("/messages/batches/$messageBatchId")->throw())->json();
+    }
+
+    public function retrieveMessageBatchResults(string $messageBatchId) :array
+    {
+        $response = ($this->client->get("/messages/batches/$messageBatchId/results")->throw());
+        $result = [];
+        $stream = $response->toPsrResponse()->getBody();
+        $resource  = StreamWrapper::getResource($stream);
+        try {
+            while (($line = fgets($resource)) !== false) {
+                $line = trim($line);
+                if ($line === '') {
+                    continue;
+                }
+                $record = json_decode($line, true, flags: JSON_THROW_ON_ERROR);
+                $result[] = $record;
+            }
+        } finally {
+
+            fclose($resource);
+        }
+        return $result;
+    }
 
     public function listMessageBatches() {}
 
@@ -91,8 +94,7 @@ class HttpClaudeClient implements ClaudeClientContract
 
     /**
      * Files
-     * @todo File DTO?
-     * @todo fix downloadable to be TRUE
+     * @todo test how can i used with Messages(Batch) API
      */
     public function createFile(array $file) : array
     {
