@@ -49,6 +49,11 @@ class Claude
         return $this->client->retrieveMessageBatchResults($messageBatchId);
     }
 
+    public function listMessageBatches(): array
+    {
+        return $this->client->listMessageBatches();
+    }
+
     public function createFile(array $file) : array
     {
         return $this->client->createFile($file);

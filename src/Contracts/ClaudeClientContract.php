@@ -20,6 +20,8 @@ interface ClaudeClientContract
 
     public function retrieveMessageBatchResults(string $messageBatchId) :array;
 
+    public function listMessageBatches() :array;
+
     public function createFile(array $file) : array;
 
     public function listFiles() :array;

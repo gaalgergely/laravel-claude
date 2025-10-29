@@ -86,7 +86,13 @@ class HttpClaudeClient implements ClaudeClientContract
         return $result;
     }
 
-    public function listMessageBatches() {}
+    /**
+     * @todo add pagination
+     */
+    public function listMessageBatches() :array
+    {
+        return ($this->client->get('/messages/batches')->throw())->json();
+    }
 
     public function cancelMessageBatch() {}
 
@@ -94,7 +100,7 @@ class HttpClaudeClient implements ClaudeClientContract
 
     /**
      * Files
-     * @todo test how can i used with Messages(Batch) API
+     * @todo test how can i use with Messages(Batch) API
      */
     public function createFile(array $file) : array
     {
