@@ -24,6 +24,8 @@ interface ClaudeClientContract
 
     public function cancelMessageBatch(string $messageBatchId): array;
 
+    public function deleteMessageBatch(string $messageBatchId) :array;
+
     public function createFile(array $file) : array;
 
     public function listFiles() :array;

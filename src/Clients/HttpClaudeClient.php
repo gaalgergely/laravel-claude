@@ -99,7 +99,10 @@ class HttpClaudeClient implements ClaudeClientContract
         return ($this->client->post("/messages/batches/$messageBatchId/cancel")->throw())->json();
     }
 
-    public function deleteMessageBatch() {}
+    public function deleteMessageBatch(string $messageBatchId) :array
+    {
+        return ($this->client->delete("/messages/batches/$messageBatchId")->throw())->json();
+    }
 
     /**
      * Files
