@@ -3,12 +3,6 @@
 namespace GergelyGaal\LaravelClaude\Services;
 
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
-use GergelyGaal\LaravelClaude\DTOs\Message;
-use GergelyGaal\LaravelClaude\DTOs\MessagesPayload;
-
-/**
- * @todo Test Claude Facade ...
- */
 
 class Claude
 {
