@@ -28,7 +28,7 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function sendMessages(array $messages) :array
     {
-        if ($messages['stream'] ?? false) {
+        if (isset($messages['stream']) && $messages['stream'] === true) {
 
             $response = $this->client->withHeaders(['Accept' => 'text/event-stream'])->post('/messages', $messages);
             $resource = StreamWrapper::getResource($response->toPsrResponse()->getBody());
