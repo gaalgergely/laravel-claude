@@ -11,8 +11,7 @@ class ClaudeServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-claude')
-            ->hasConfigFile()
-            ->hasCommand(\GergelyGaal\LaravelClaude\Commands\GenerateArticleCommand::class);
+            ->hasConfigFile();
     }
 
     public function registeringPackage(): void
