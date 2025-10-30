@@ -94,7 +94,10 @@ class HttpClaudeClient implements ClaudeClientContract
         return ($this->client->get('/messages/batches')->throw())->json();
     }
 
-    public function cancelMessageBatch() {}
+    public function cancelMessageBatch(string $messageBatchId): array
+    {
+        return ($this->client->post("/messages/batches/$messageBatchId/cancel")->throw())->json();
+    }
 
     public function deleteMessageBatch() {}
 
