@@ -28,6 +28,36 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function sendMessages(array $messages) :array
     {
+        if ($messages['stream'] ?? false) {
+
+            $response = $this->client->withHeaders(['Accept' => 'text/event-stream'])->post('/messages', $messages);
+            $resource = StreamWrapper::getResource($response->toPsrResponse()->getBody());
+            $result = [];
+            try {
+                while (($line = fgets($resource)) !== false) {
+
+                    $line = trim($line);
+
+                    if ($line === '' || str_starts_with($line, ':')) {
+                        continue; // ignore keep-alives
+                    }
+                    if ($line === 'data: [DONE]') {
+                        break; // anthropic end marker
+                    }
+
+                    // other fields (e.g. event:) can be inspected if you need them
+                    if (!str_starts_with($line, 'data: ')) {
+                        continue;
+                    }
+
+                    $payload = json_decode(substr($line, 6), true, flags: JSON_THROW_ON_ERROR);
+                    $result[] = $payload;
+                }
+                return $result;
+            } finally {
+                fclose($resource);
+            }
+        }
         return ($this->client->post('/messages', $messages))->json();
     }
 
@@ -71,9 +101,9 @@ class HttpClaudeClient implements ClaudeClientContract
     public function retrieveMessageBatchResults(string $messageBatchId) :array
     {
         $response = $this->client->get("/messages/batches/$messageBatchId/results");
-        $result = [];
         $stream = $response->toPsrResponse()->getBody();
         $resource  = StreamWrapper::getResource($stream);
+        $result = [];
         try {
             while (($line = fgets($resource)) !== false) {
                 $line = trim($line);
