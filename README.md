@@ -1,6 +1,6 @@
 # Laravel Claude
 
-A Laravel 11 package for generating article drafts using Anthropic Claude.
+A Laravel 12 package for using Anthropic Claude API.
 
 ## Installation
 
