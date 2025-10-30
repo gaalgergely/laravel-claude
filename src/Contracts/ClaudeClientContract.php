@@ -2,8 +2,6 @@
 
 namespace GergelyGaal\LaravelClaude\Contracts;
 
-use GergelyGaal\LaravelClaude\DTOs\MessagesPayload;
-
 interface ClaudeClientContract
 {
     public function sendMessages(array $messages): array;
