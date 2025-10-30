@@ -10,7 +10,7 @@ interface ClaudeClientContract
 
     public function countMessageTokens(array $messages): array;
 
-    public function listModels() :array;
+    public function listModels(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array;
 
     public function getModel(string $model) :array;
 
@@ -20,7 +20,7 @@ interface ClaudeClientContract
 
     public function retrieveMessageBatchResults(string $messageBatchId) :array;
 
-    public function listMessageBatches() :array;
+    public function listMessageBatches(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array;
 
     public function cancelMessageBatch(string $messageBatchId): array;
 
@@ -28,7 +28,7 @@ interface ClaudeClientContract
 
     public function createFile(array $file) : array;
 
-    public function listFiles() :array;
+    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array;
 
     public function getFileMetadata(string $fileId) :array;
 

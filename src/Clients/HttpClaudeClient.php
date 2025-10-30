@@ -28,45 +28,49 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function sendMessages(array $messages) :array
     {
-        return ($this->client->post('/messages', $messages)->throw())->json();
+        return ($this->client->post('/messages', $messages))->json();
     }
 
     public function countMessageTokens(array $messages)  :array
     {
-        return ($this->client->post('/messages/count_tokens', $messages)->throw())->json();
+        return ($this->client->post('/messages/count_tokens', $messages))->json();
     }
 
     /**
      * @note Models
-     * @todo add pagination
-     * @see https://docs.claude.com/en/api/models-list (before_id, after_id, limit etc.)
      */
-    public function listModels() :array
+    public function listModels(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
     {
-        return ($this->client->get('/models')->throw())->json();
+        $params = array_filter([
+            'after_id'  => $afterId,
+            'before_id' => $beforeId,
+            'limit'     => $limit,
+        ]);
+
+        return ($this->client->get('/models', $params))->json();
     }
 
     public function getModel(string $model) :array
     {
-        return ($this->client->get("/models/$model")->throw())->json();
+        return ($this->client->get("/models/$model"))->json();
     }
 
     /**
-     * Message Batches
+     * @note Message Batches
      */
     public function createMessageBatch(array $messageBatch) :array
     {
-        return ($this->client->post('/messages/batches', ['requests' => $messageBatch])->throw())->json();
+        return ($this->client->post('/messages/batches', ['requests' => $messageBatch]))->json();
     }
 
     public function retrieveMessageBatch(string $messageBatchId) :array
     {
-        return ($this->client->get("/messages/batches/$messageBatchId")->throw())->json();
+        return ($this->client->get("/messages/batches/$messageBatchId"))->json();
     }
 
     public function retrieveMessageBatchResults(string $messageBatchId) :array
     {
-        $response = ($this->client->get("/messages/batches/$messageBatchId/results")->throw());
+        $response = $this->client->get("/messages/batches/$messageBatchId/results");
         $result = [];
         $stream = $response->toPsrResponse()->getBody();
         $resource  = StreamWrapper::getResource($stream);
@@ -89,24 +93,31 @@ class HttpClaudeClient implements ClaudeClientContract
     /**
      * @todo add pagination
      */
-    public function listMessageBatches() :array
+    public function listMessageBatches(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
     {
-        return ($this->client->get('/messages/batches')->throw())->json();
+        $params = array_filter([
+            'after_id'  => $afterId,
+            'before_id' => $beforeId,
+            'limit'     => $limit,
+        ]);
+
+        return ($this->client->get('/messages/batches', $params))->json();
     }
 
     public function cancelMessageBatch(string $messageBatchId): array
     {
-        return ($this->client->post("/messages/batches/$messageBatchId/cancel")->throw())->json();
+        return ($this->client->post("/messages/batches/$messageBatchId/cancel"))->json();
     }
 
     public function deleteMessageBatch(string $messageBatchId) :array
     {
-        return ($this->client->delete("/messages/batches/$messageBatchId")->throw())->json();
+        return ($this->client->delete("/messages/batches/$messageBatchId"))->json();
     }
 
     /**
      * Files
      * @todo test how can i use with Messages(Batch) API
+     * @note Files API in beta
      */
     public function createFile(array $file) : array
     {
@@ -115,25 +126,31 @@ class HttpClaudeClient implements ClaudeClientContract
                 'anthropic-beta' => 'files-api-2025-04-14'
             ])
             ->attach('file', $file['content'], $file['name'])
-            ->post('/files')
-            ->throw())->json();
+            ->post('/files'))
+            ->json();
     }
 
     /**
      * @todo add pagination
      */
-    public function listFiles() :array
+    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
     {
+        $params = array_filter([
+            'after_id'  => $afterId,
+            'before_id' => $beforeId,
+            'limit'     => $limit,
+        ]);
+
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
-            ])->get('/files')->throw())->json();
+            ])->get('/files', $params))->json();
     }
 
     public function getFileMetadata(string $fileId) :array
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
-            ])->get("/files/$fileId")->throw())->json();
+            ])->get("/files/$fileId"))->json();
     }
 
     /**
@@ -144,13 +161,13 @@ class HttpClaudeClient implements ClaudeClientContract
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
-            ])->get("/files/$fileId/content")->throw())->stream();
+            ])->get("/files/$fileId/content"))->stream();
     }
 
     public function deleteFile(string $fileId) :array
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
-            ])->delete("/files/$fileId")->throw())->json();
+            ])->delete("/files/$fileId"))->json();
     }
 }

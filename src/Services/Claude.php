@@ -24,9 +24,9 @@ class Claude
         return $this->client->countMessageTokens($messages);
     }
 
-    public function listModels(): array
+    public function listModels(?string $afterId = null, ?string $beforeId = null, ?int $limit = null): array
     {
-        return $this->client->listModels();
+        return $this->client->listModels($afterId, $beforeId, $limit);
     }
 
     public function getModel(string $model): array
@@ -49,9 +49,9 @@ class Claude
         return $this->client->retrieveMessageBatchResults($messageBatchId);
     }
 
-    public function listMessageBatches(): array
+    public function listMessageBatches(?string $afterId = null, ?string $beforeId = null, ?int $limit = null): array
     {
-        return $this->client->listMessageBatches();
+        return $this->client->listMessageBatches($afterId, $beforeId, $limit);
     }
 
     public function cancelMessageBatch(string $messageBatchId): array
@@ -69,9 +69,9 @@ class Claude
         return $this->client->createFile($file);
     }
 
-    public function listFiles(): array
+    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null): array
     {
-        return $this->client->listFiles();
+        return $this->client->listFiles($afterId, $beforeId, $limit);
     }
 
     public function getFileMetadata(string $fileId): array
