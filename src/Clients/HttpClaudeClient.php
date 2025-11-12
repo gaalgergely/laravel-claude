@@ -4,6 +4,7 @@ namespace GergelyGaal\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
+use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesPayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
 
 class HttpClaudeClient implements ClaudeClientContract
@@ -28,6 +29,7 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function sendMessages(array $messages) :array
     {
+        // @todo test this part also !!!
         if (isset($messages['stream']) && $messages['stream'] === true) {
 
             $response = $this->client->withHeaders(['Accept' => 'text/event-stream'])->post('/messages', $messages);
@@ -58,6 +60,7 @@ class HttpClaudeClient implements ClaudeClientContract
                 fclose($resource);
             }
         }
+        $messages = (new MessagesPayloadValidator())->validate($messages);
         return ($this->client->post('/messages', $messages))->json();
     }
 
