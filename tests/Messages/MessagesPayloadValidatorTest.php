@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
-use GergelyGaal\LaravelClaude\Payloads\{MessagesData, Message, MessageFragment, MessagesPayloadValidator};
+use GergelyGaal\LaravelClaude\Payloads\Messages\{MessagesData, Message, MessageFragment, MessagesPayloadValidator, MessagesSchema};
 use GergelyGaal\LaravelClaude\Enums\Role;
-use GergelyGaal\LaravelClaude\Exceptions\MessagesPayloadValidationException;
+use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
 
 it('executes HTTP for valid payload', function () {
     Http::fake(['https://api.anthropic.com/*' => Http::response(['id' => 'ok'], 200)]);
 
+    // @todo fix this to be array
     $payload = new MessagesData(
         model: 'claude-3-opus-20240229',
         messages: [
@@ -21,17 +22,17 @@ it('executes HTTP for valid payload', function () {
 
     $client = new HttpClaudeClient(new PayloadValidationException(), 'test-key');
 
-    expect($client->sendMessage($payload))->toMatchArray(['id' => 'ok']);
+    expect($client->sendMessages($payload))->toMatchArray(['id' => 'ok']);
 });
 
 it('throws exception with exact paths when fields missing', function () {
     $client = new HttpClaudeClient(new MessagesPayloadValidator(), 'key');
 
-    $client->sendMessage([
+    $client->sendMessages([
         'model' => '',
         'messages' => [['role' => 'system', 'content' => []]],
     ]);
-})->throws(MessagesPayloadValidationException::class, fn ($e) => tap($e->errors(), function ($errors) {
+})->throws(PayloadValidationException::class, fn ($e) => tap($e->errors(), function ($errors) {
     expect($errors)->toHaveKey('model.0', 'The model field is required.');
     expect($errors)->toHaveKey('messages.0.content.0.text.0');
 }));
