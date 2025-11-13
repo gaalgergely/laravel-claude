@@ -28,14 +28,19 @@ it('executes HTTP for valid payload', function () {
 it('throws exception with exact paths when fields missing', function () {
     $client = new HttpClaudeClient(new MessagesPayloadValidator(), 'key');
 
-    $client->sendMessages([
-        'model' => '',
-        'messages' => [['role' => 'system', 'content' => []]],
-    ]);
-})->throws(PayloadValidationException::class, fn ($e) => tap($e->errors(), function ($errors) {
-    expect($errors)->toHaveKey('model.0', 'The model field is required.');
-    expect($errors)->toHaveKey('messages.0.content.0.text.0');
-}));
+    try {
+        $client->sendMessages([
+            'model' => '',
+            'messages' => [['role' => 'system', 'content' => []]],
+        ]);
+
+        test()->fail('PayloadValidationException was not thrown.');
+    } catch (PayloadValidationException $e) {
+        $errors = $e->errors();
+        expect($errors)->toHaveKey('model.0', 'The model field is required.');
+        expect($errors)->toHaveKey('messages.0.content.0.text.0');
+    }
+});
 
 it('rejects enums and nested arrays correctly', function () {
     (new MessagesPayloadValidator())->validate([
