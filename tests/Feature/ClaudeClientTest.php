@@ -10,7 +10,7 @@ it('returns generated text from Claude', function () {
 
     $client = new HttpClaudeClient();
     expect($client->sendMessages('test'))->toContain('Claude');
-})->skip();
+});
 
 it('handles retries and timeouts', function () {
     Http::fakeSequence()
@@ -19,4 +19,4 @@ it('handles retries and timeouts', function () {
 
     $client = new HttpClaudeClient();
     expect($client->sendMessages('retry'))->toBe('Recovered');
-})->skip();
+});
