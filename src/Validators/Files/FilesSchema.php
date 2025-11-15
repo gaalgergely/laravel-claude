@@ -2,8 +2,6 @@
 
 namespace GergelyGaal\LaravelClaude\Validators\Files;
 
-use GergelyGaal\LaravelClaude\Enums\Role;
-
 final class FilesSchema
 {
     public static function rules(): array
