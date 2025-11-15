@@ -14,6 +14,7 @@ final class MessagesSchema
 
         return [
             'model' => ['required', 'string', 'starts_with:claude-'],
+            'system' => ['nullable', 'string'],
             'messages' => ['required', 'array', 'min:1'],
             'messages.*.role' => ['required', 'string', "in:{$roleEnum}"],
             'messages.*.content' => ['required', 'array', 'min:1'],

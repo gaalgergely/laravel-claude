@@ -6,6 +6,7 @@ final readonly class MessagesData
 {
     public function __construct(
         public string $model,
+        public ?string $system,
         /** @var array<int, Message> */
         public array $messages,
         public ?int $maxTokens = null, // @todo config
@@ -18,6 +19,7 @@ final readonly class MessagesData
     {
         return [
             'model' => $this->model,
+            'system' => $this->system,
             'messages' => array_map(fn ($message) => $message->toArray(), $this->messages),
             'max_tokens' => $this->maxTokens,
             'temperature' => $this->temperature,
