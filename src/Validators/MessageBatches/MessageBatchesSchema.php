@@ -15,7 +15,7 @@ final class MessageBatchesSchema
          */
 
         return [
-            'requests.*.custom_id' => ['required', 'string'],
+            'requests.*.custom_id' => ['required', 'string', 'distinct'],
             'requests.*.params' => ['required', 'array'],
             'requests.*.params.model' => ['required', 'string', 'starts_with:claude-'],
             'requests.*.params.system' => ['nullable', 'string'],
