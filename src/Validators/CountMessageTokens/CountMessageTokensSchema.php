@@ -1,10 +1,10 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Payloads\Messages;
+namespace GergelyGaal\LaravelClaude\Validators\CountMessageTokens;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 
-final class MessagesSchema
+final class CountMessageTokensSchema
 {
     public static function rules(): array
     {
@@ -37,9 +37,6 @@ final class MessagesSchema
             'messages.*.content.*.source.url' => ['required_if:messages.*.content.*.source.type,url', 'string', 'active_url'],
             'messages.*.content.*.source.media_type' => ['required_if:messages.*.content.*.source.type,base64', 'string', 'in:image/jpeg,image/png,image/gif,image/webp'],
             'messages.*.content.*.source.data' => ['required_if:messages.*.content.*.source.type,base64', 'string'],
-            'max_tokens' => ['required', 'integer', 'min:1'],
-            'temperature' => ['nullable', 'numeric', 'between:0,1'],
-            'stream' => ['nullable', 'boolean:strict']
         ];
     }
 }

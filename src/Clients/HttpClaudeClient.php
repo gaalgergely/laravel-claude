@@ -4,6 +4,7 @@ namespace GergelyGaal\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
+use GergelyGaal\LaravelClaude\Validators\CountMessageTokens\CountMessageTokensPayloadValidator;
 use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesPayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
 
@@ -29,6 +30,7 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function sendMessages(array $messages) :array
     {
+        $messages = (new MessagesPayloadValidator())->validate($messages);
         // @todo test this part also !!!
         if (isset($messages['stream']) && $messages['stream'] === true) {
 
@@ -61,13 +63,12 @@ class HttpClaudeClient implements ClaudeClientContract
             }
         }
 
-        $messages = (new MessagesPayloadValidator())->validate($messages);
-
         return ($this->client->post('/messages', $messages))->json();
     }
 
     public function countMessageTokens(array $messages)  :array
     {
+        $messages = (new CountMessageTokensPayloadValidator())->validate($messages);
         return ($this->client->post('/messages/count_tokens', $messages))->json();
     }
 
