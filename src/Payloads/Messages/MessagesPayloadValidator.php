@@ -40,6 +40,9 @@ final class MessagesPayloadValidator
         return $validator->validated();
     }
 
+    /**
+     * @todo explain this ...
+     */
     public function asLaravelException(array|MessagesData $payload): array
     {
         try {
