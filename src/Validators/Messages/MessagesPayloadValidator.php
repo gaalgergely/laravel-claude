@@ -41,19 +41,4 @@ final class MessagesPayloadValidator
 
         return $validator->validated();
     }
-
-    /**
-     * @todo explain this ...
-     */
-    public function asLaravelException(array|MessagesData $payload): array
-    {
-        try {
-            return $this->validate($payload);
-        } catch (PayloadValidationException $e) {
-            throw new LaravelValidationException(
-                Validator::make([], []),
-                $e->toMessageBag()
-            );
-        }
-    }
 }
