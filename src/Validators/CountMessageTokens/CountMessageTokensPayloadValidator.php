@@ -3,7 +3,6 @@
 namespace GergelyGaal\LaravelClaude\Validators\CountMessageTokens;
 
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException as LaravelValidationException;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
 
 use Illuminate\Support\Facades\Log;
