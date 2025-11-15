@@ -1,6 +1,6 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Validators\CountMessageTokens;
+namespace GergelyGaal\LaravelClaude\Schemas;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 

@@ -4,10 +4,12 @@ namespace GergelyGaal\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
-use GergelyGaal\LaravelClaude\Validators\MessageBatches\MessageBatchesPayloadValidator;
-use GergelyGaal\LaravelClaude\Validators\CountMessageTokens\CountMessageTokensPayloadValidator;
-use GergelyGaal\LaravelClaude\Validators\Messages\MessagesPayloadValidator;
+use GergelyGaal\LaravelClaude\Schemas\CountMessageTokensSchema;
+use GergelyGaal\LaravelClaude\Schemas\FilesSchema;
+use GergelyGaal\LaravelClaude\Schemas\MessageBatchesSchema;
 use GergelyGaal\LaravelClaude\Validators\Files\FilesPayloadValidator;
+use GergelyGaal\LaravelClaude\Schemas\MessagesSchema;
+use GergelyGaal\LaravelClaude\Validators\PayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
 
 class HttpClaudeClient implements ClaudeClientContract
@@ -27,12 +29,9 @@ class HttpClaudeClient implements ClaudeClientContract
             ->retry($config['retries']);
     }
 
-    /**
-     * @note Messages
-     */
     public function sendMessages(array $messages) :array
     {
-        $messages = (new MessagesPayloadValidator())->validate($messages);
+        $messages = (new PayloadValidator(MessagesSchema::rules()))->validate($messages);
         // @todo test this part also !!!
         if (isset($messages['stream']) && $messages['stream'] === true) {
 
@@ -70,13 +69,10 @@ class HttpClaudeClient implements ClaudeClientContract
 
     public function countMessageTokens(array $messages)  :array
     {
-        $messages = (new CountMessageTokensPayloadValidator())->validate($messages);
+        $messages = (new PayloadValidator(CountMessageTokensSchema::rules()))->validate($messages);
         return ($this->client->post('/messages/count_tokens', $messages))->json();
     }
 
-    /**
-     * @note Models
-     */
     public function listModels(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
     {
         $params = array_filter([
@@ -93,12 +89,9 @@ class HttpClaudeClient implements ClaudeClientContract
         return ($this->client->get("/models/$model"))->json();
     }
 
-    /**
-     * @note Message Batches
-     */
     public function createMessageBatch(array $messageBatch) :array
     {
-        $messageBatch = (new MessageBatchesPayloadValidator())->validate($messageBatch);
+        $messageBatch = (new PayloadValidator(MessageBatchesSchema::rules()))->validate($messageBatch);
         return ($this->client->post('/messages/batches', $messageBatch))->json();
     }
 
@@ -133,9 +126,6 @@ class HttpClaudeClient implements ClaudeClientContract
         return $result;
     }
 
-    /**
-     * @todo add pagination
-     */
     public function listMessageBatches(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
     {
         $params = array_filter([
@@ -164,7 +154,7 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function createFile(array $file) : array
     {
-        $file = (new FilesPayloadValidator())->validate($file);
+        $file = (new PayloadValidator(FilesSchema::rules()))->validate($file);
         return ($this->client
             ->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
@@ -174,9 +164,6 @@ class HttpClaudeClient implements ClaudeClientContract
             ->json();
     }
 
-    /**
-     * @todo add pagination
-     */
     public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
     {
         $params = array_filter([

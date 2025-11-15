@@ -1,10 +1,10 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Validators\Messages;
+namespace GergelyGaal\LaravelClaude\Schemas;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 
-final class MessagesSchema
+final class MessagesSchema implements SchemaInterface
 {
     public static function rules(): array
     {

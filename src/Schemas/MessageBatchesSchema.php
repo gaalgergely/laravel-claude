@@ -1,10 +1,10 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Validators\MessageBatches;
+namespace GergelyGaal\LaravelClaude\Schemas;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 
-final class MessageBatchesSchema
+final class MessageBatchesSchema implements SchemaInterface
 {
     public static function rules(): array
     {

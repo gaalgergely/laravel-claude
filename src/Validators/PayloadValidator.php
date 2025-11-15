@@ -1,27 +1,29 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Validators\MessageBatches;
+namespace GergelyGaal\LaravelClaude\Validators;
 
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException as LaravelValidationException;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
+
+use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesData;
 
 use Illuminate\Support\Facades\Log;
 
-final class MessageBatchesPayloadValidator
+final class PayloadValidator
 {
-    public function __construct(private array $schemaRules = [])
+    private array $schemaRules = [];
+
+    public function __construct(array $rules)
     {
-        $this->schemaRules = $schemaRules ?: MessageBatchesSchema::rules();
+        $this->schemaRules = $rules;
     }
 
     /**
-     * @param  array  $payload
+     * @param  array|ClaudeMessageData  $payload
      */
-    public function validate(array $payload): array
+    public function validate(array|MessagesData $payload): array
     {
-        //$arrayPayload = $payload instanceof MessagesData ? $payload->toArray() : $payload;
-        $arrayPayload = $payload;
+        $arrayPayload = $payload instanceof MessagesData ? $payload->toArray() : $payload;
 
         $validator = Validator::make($arrayPayload, $this->schemaRules);
 

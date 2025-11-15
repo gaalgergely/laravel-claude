@@ -1,8 +1,8 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Validators\Files;
+namespace GergelyGaal\LaravelClaude\Schemas;
 
-final class FilesSchema
+final class FilesSchema implements SchemaInterface
 {
     public static function rules(): array
     {
