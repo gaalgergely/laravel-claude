@@ -60,7 +60,9 @@ class HttpClaudeClient implements ClaudeClientContract
                 fclose($resource);
             }
         }
+
         $messages = (new MessagesPayloadValidator())->validate($messages);
+
         return ($this->client->post('/messages', $messages))->json();
     }
 
