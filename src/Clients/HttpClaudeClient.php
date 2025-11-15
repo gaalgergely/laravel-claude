@@ -7,6 +7,7 @@ use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
 use GergelyGaal\LaravelClaude\Validators\MessageBatches\MessageBatchesPayloadValidator;
 use GergelyGaal\LaravelClaude\Validators\CountMessageTokens\CountMessageTokensPayloadValidator;
 use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesPayloadValidator;
+use GergelyGaal\LaravelClaude\Validators\Files\FilesPayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
 
 class HttpClaudeClient implements ClaudeClientContract
@@ -112,6 +113,10 @@ class HttpClaudeClient implements ClaudeClientContract
         $stream = $response->toPsrResponse()->getBody();
         $resource  = StreamWrapper::getResource($stream);
         $result = [];
+        /**
+         * @todo possible duplicated code fragment
+         * @see sendMessages() - line 32
+         */
         try {
             while (($line = fgets($resource)) !== false) {
                 $line = trim($line);
@@ -159,6 +164,7 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function createFile(array $file) : array
     {
+        $file = (new FilesPayloadValidator())->validate($file);
         return ($this->client
             ->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
