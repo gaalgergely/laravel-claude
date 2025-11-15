@@ -1,6 +1,6 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Validators\CountMessageTokens;
+namespace GergelyGaal\LaravelClaude\Validators\MessageBatches;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException as LaravelValidationException;
@@ -8,11 +8,11 @@ use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
 
 use Illuminate\Support\Facades\Log;
 
-final class CountMessageTokensPayloadValidator
+final class MessageBatchesPayloadValidator
 {
     public function __construct(private array $schemaRules = [])
     {
-        $this->schemaRules = $schemaRules ?: CountMessageTokensSchema::rules();
+        $this->schemaRules = $schemaRules ?: MessageBatchesSchema::rules();
     }
 
     /**

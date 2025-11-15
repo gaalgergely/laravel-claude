@@ -4,6 +4,7 @@ namespace GergelyGaal\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
+use GergelyGaal\LaravelClaude\Validators\MessageBatches\MessageBatchesPayloadValidator;
 use GergelyGaal\LaravelClaude\Validators\CountMessageTokens\CountMessageTokensPayloadValidator;
 use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesPayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
@@ -96,7 +97,8 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function createMessageBatch(array $messageBatch) :array
     {
-        return ($this->client->post('/messages/batches', ['requests' => $messageBatch]))->json();
+        $messageBatch = (new MessageBatchesPayloadValidator())->validate($messageBatch);
+        return ($this->client->post('/messages/batches', $messageBatch))->json();
     }
 
     public function retrieveMessageBatch(string $messageBatchId) :array
