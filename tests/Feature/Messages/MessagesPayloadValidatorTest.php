@@ -5,40 +5,40 @@ use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
 use GergelyGaal\LaravelClaude\Payloads\Messages\{MessagesData, Message, MessageFragment, MessagesPayloadValidator, MessagesSchema};
 use GergelyGaal\LaravelClaude\Enums\Role;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
+use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
+use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
 
 it('executes HTTP for valid payload', function () {
-    Http::fake(['https://api.anthropic.com/*' => Http::response(['id' => 'ok'], 200)]);
 
-    // @todo fix this to be array
-    $payload = new MessagesData(
-        model: 'claude-3-opus-20240229',
-        messages: [
-            new Message(Role::USER, [
-                new MessageFragment('text', 'hello'),
-            ]),
-        ],
-        maxTokens: 1024,
-    );
+    Http::fake(['https://api.anthropic.com/*' => Http::response(MessagesResponseFixture::success(), 200)]);
 
-    $client = new HttpClaudeClient(new PayloadValidationException(), 'test-key');
+    $client = new HttpClaudeClient();
 
-    expect($client->sendMessages($payload))->toMatchArray(['id' => 'ok']);
+    expect($client->sendMessages(MessagesPayloadFixture::base()))->toMatchArray(MessagesResponseFixture::success());
+
 });
 
 it('throws exception with exact paths when fields missing', function () {
     $client = new HttpClaudeClient(new MessagesPayloadValidator(), 'key');
 
     try {
-        $client->sendMessages([
+        $client->sendMessages(MessagesPayloadFixture::base([
             'model' => '',
-            'messages' => [['role' => 'system', 'content' => []]],
-        ]);
+            'messages' => [
+                [
+                    'role' => Role::USER->name,
+                    'content' => [
+                        ['type' => 'text', 'text' => ''],
+                    ],
+                ],
+            ],
+        ]));
 
         test()->fail('PayloadValidationException was not thrown.');
     } catch (PayloadValidationException $e) {
         $errors = $e->errors();
-        expect($errors)->toHaveKey('model.0', 'The model field is required.');
-        expect($errors)->toHaveKey('messages.0.content.0.text.0');
+        expect($errors)->toHaveKey('model', ['The model field is required.']);
+        expect($errors)->toHaveKey('messages.0.content.0.text', ['The messages.0.content.0.text field is required.']);
     }
 });
 

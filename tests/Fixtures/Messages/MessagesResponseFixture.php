@@ -2,6 +2,8 @@
 
 namespace GergelyGaal\LaravelClaude\Fixtures\Messages;
 
+use GergelyGaal\LaravelClaude\Enums\Role;
+
 final class MessagesResponseFixture
 {
     /**
@@ -12,7 +14,7 @@ final class MessagesResponseFixture
         $response = [
             'id' => 'msg_01J123EXAMPLE',
             'type' => 'message',
-            'role' => 'assistant',
+            'role' => Role::ASSISTANT->value,
             'content' => [
                 [
                     'type' => 'text',

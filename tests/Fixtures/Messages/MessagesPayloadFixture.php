@@ -2,6 +2,8 @@
 
 namespace GergelyGaal\LaravelClaude\Fixtures\Messages;
 
+use GergelyGaal\LaravelClaude\Enums\Role;
+
 final class MessagesPayloadFixture
 {
     /**
@@ -13,7 +15,7 @@ final class MessagesPayloadFixture
             'model' => 'claude-3-sonnet-20240229',
             'messages' => [
                 [
-                    'role' => 'user',
+                    'role' => Role::USER->value,
                     'content' => [
                         [
                             'type' => 'text',
