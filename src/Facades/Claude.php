@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static string downloadFile(string $fileId)
  * @method static array deleteFile(string $fileId)
  *
- * @see \GergelyGaal\LaravelClaude\Services\Claude
+ * @see \GergelyGaal\LaravelClaude\Services\ClaudeService
  */
 class Claude extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \GergelyGaal\LaravelClaude\Services\Claude::class;
+        return \GergelyGaal\LaravelClaude\Services\ClaudeService::class;
     }
 }

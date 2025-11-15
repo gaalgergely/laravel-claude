@@ -4,7 +4,7 @@ namespace GergelyGaal\LaravelClaude\Services;
 
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
 
-class Claude
+class ClaudeService
 {
     public function __construct(private ClaudeClientContract $client) {}
 

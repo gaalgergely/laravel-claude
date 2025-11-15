@@ -5,7 +5,7 @@ namespace GergelyGaal\LaravelClaude;
 use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
 use GergelyGaal\LaravelClaude\Exceptions\ApiKeyIsMissingException;
-use GergelyGaal\LaravelClaude\Services\Claude as ClaudeService;
+use GergelyGaal\LaravelClaude\Services\ClaudeService;
 use Illuminate\Support\ServiceProvider;
 
 class ClaudeServiceProvider extends ServiceProvider

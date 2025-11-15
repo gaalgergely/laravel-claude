@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Facades\Claude;
-use GergelyGaal\LaravelClaude\Services\Claude as ClaudeService;
+use GergelyGaal\LaravelClaude\Services\ClaudeService;
 use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
 use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
 
