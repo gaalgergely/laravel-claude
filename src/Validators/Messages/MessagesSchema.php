@@ -1,6 +1,6 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Payloads\Messages;
+namespace GergelyGaal\LaravelClaude\Validators\Messages;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 

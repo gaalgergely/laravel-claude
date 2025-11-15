@@ -1,10 +1,12 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Payloads\Messages;
+namespace GergelyGaal\LaravelClaude\Validators\Messages;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException as LaravelValidationException;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
+
+use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesData;
 
 use Illuminate\Support\Facades\Log;
 

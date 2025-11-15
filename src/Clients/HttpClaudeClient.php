@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
 use GergelyGaal\LaravelClaude\Validators\MessageBatches\MessageBatchesPayloadValidator;
 use GergelyGaal\LaravelClaude\Validators\CountMessageTokens\CountMessageTokensPayloadValidator;
-use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesPayloadValidator;
+use GergelyGaal\LaravelClaude\Validators\Messages\MessagesPayloadValidator;
 use GergelyGaal\LaravelClaude\Validators\Files\FilesPayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
 
