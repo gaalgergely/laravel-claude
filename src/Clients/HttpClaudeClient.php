@@ -31,7 +31,7 @@ class HttpClaudeClient implements ClaudeClientContract
 
     public function sendMessages(array $messages) :array
     {
-        $messages = (new PayloadValidator(MessagesSchema::rules()))->validate($messages);
+        $messages = (new PayloadValidator(MessagesSchema::class))->validate($messages);
         // @todo test this part also !!!
         if (isset($messages['stream']) && $messages['stream'] === true) {
 
@@ -69,7 +69,7 @@ class HttpClaudeClient implements ClaudeClientContract
 
     public function countMessageTokens(array $messages)  :array
     {
-        $messages = (new PayloadValidator(CountMessageTokensSchema::rules()))->validate($messages);
+        $messages = (new PayloadValidator(CountMessageTokensSchema::class))->validate($messages);
         return ($this->client->post('/messages/count_tokens', $messages))->json();
     }
 

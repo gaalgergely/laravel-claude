@@ -4,14 +4,14 @@ namespace GergelyGaal\LaravelClaude\Schemas;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 
-final class MessagesSchema implements SchemaInterface
+final class MessagesSchema extends SchemaAbstract implements SchemaInterface
 {
     public static function rules(): array
     {
         $roleEnum = implode(',', array_map(fn (Role $role) => $role->value, Role::cases()));
 
         return [
-            'model' => ['required', 'string', 'starts_with:claude-'],
+            'model' => ['nullable', 'string', 'starts_with:claude-'],
             'system' => ['nullable', 'string'],
             'messages' => ['required', 'array', 'min:1'],
             'messages.*.role' => ['required', 'string', "in:{$roleEnum}"],
@@ -37,9 +37,20 @@ final class MessagesSchema implements SchemaInterface
             'messages.*.content.*.source.url' => ['required_if:messages.*.content.*.source.type,url', 'string', 'active_url'],
             'messages.*.content.*.source.media_type' => ['required_if:messages.*.content.*.source.type,base64', 'string', 'in:image/jpeg,image/png,image/gif,image/webp'],
             'messages.*.content.*.source.data' => ['required_if:messages.*.content.*.source.type,base64', 'string'],
-            'max_tokens' => ['required', 'integer', 'min:1'],
+            'max_tokens' => ['nullable', 'integer', 'min:1'],
             'temperature' => ['nullable', 'numeric', 'between:0,1'],
             'stream' => ['nullable', 'boolean:strict']
+        ];
+    }
+
+    public static function defaults(): array
+    {
+        parent::defaults();
+        return [
+            'model' => static::$config['model'],
+            'max_tokens' => static::$config['max_tokens'],
+            'temperature' => static::$config['temperature'],
+            'stream' => false
         ];
     }
 }

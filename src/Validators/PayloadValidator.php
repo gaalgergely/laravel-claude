@@ -2,30 +2,33 @@
 
 namespace GergelyGaal\LaravelClaude\Validators;
 
+use GergelyGaal\LaravelClaude\Schemas\SchemaInterface;
+use InvalidArgumentException;
 use Illuminate\Support\Facades\Validator;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
-
-use GergelyGaal\LaravelClaude\Payloads\Messages\MessagesData;
 
 use Illuminate\Support\Facades\Log;
 
 final class PayloadValidator
 {
-    private array $schemaRules = [];
+    private string $schema;
 
-    public function __construct(array $rules)
+    public function __construct(string $schemaClass)
     {
-        $this->schemaRules = $rules;
+        if (!is_subclass_of($schemaClass, SchemaInterface::class)) {
+            throw new InvalidArgumentException('Schema must implement '.SchemaInterface::class);
+        }
+
+        $this->schema = $schemaClass;
     }
 
     /**
-     * @param  array|ClaudeMessageData  $payload
+     * @param  array  $payload
      */
-    public function validate(array|MessagesData $payload): array
+    public function validate(array $payload): array
     {
-        $arrayPayload = $payload instanceof MessagesData ? $payload->toArray() : $payload;
-
-        $validator = Validator::make($arrayPayload, $this->schemaRules);
+        $schema = $this->schema;
+        $validator = Validator::make(array_merge($payload, $schema::defaults()), $schema::rules());
 
         // @todo make the message informative
 
@@ -34,7 +37,7 @@ final class PayloadValidator
             // @todo just for testing
             Log::error('Claude payload validation failed', [
                 'errors' => $validator->errors()->toArray(),
-                'payload' => $arrayPayload,
+                'payload' => $payload,
             ]);
 
             throw PayloadValidationException::fromValidator($validator);

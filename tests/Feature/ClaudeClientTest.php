@@ -5,6 +5,16 @@ use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
 use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
 use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
 
+it('executes HTTP for valid payload', function () {
+
+    Http::fake(['https://api.anthropic.com/*' => Http::response(MessagesResponseFixture::success(), 200)]);
+
+    $client = new HttpClaudeClient();
+
+    expect($client->sendMessages(MessagesPayloadFixture::base()))->toMatchArray(MessagesResponseFixture::success());
+
+});
+
 it('returns generated text from Claude', function () {
 
     Http::fake([

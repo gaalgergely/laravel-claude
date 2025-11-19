@@ -2,24 +2,15 @@
 
 use Illuminate\Support\Facades\Http;
 use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
-use GergelyGaal\LaravelClaude\Payloads\Messages\{MessagesData, Message, MessageFragment, MessagesPayloadValidator, MessagesSchema};
 use GergelyGaal\LaravelClaude\Enums\Role;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
 use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
 use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
-
-it('executes HTTP for valid payload', function () {
-
-    Http::fake(['https://api.anthropic.com/*' => Http::response(MessagesResponseFixture::success(), 200)]);
-
-    $client = new HttpClaudeClient();
-
-    expect($client->sendMessages(MessagesPayloadFixture::base()))->toMatchArray(MessagesResponseFixture::success());
-
-});
+use GergelyGaal\LaravelClaude\Schemas\MessagesSchema;
+use GergelyGaal\LaravelClaude\Validators\PayloadValidator;
 
 it('throws exception with exact paths when fields missing', function () {
-    $client = new HttpClaudeClient(new MessagesPayloadValidator(), 'key');
+    $client = new HttpClaudeClient(new PayloadValidator(MessagesSchema::rules()), 'key');
 
     try {
         $client->sendMessages(MessagesPayloadFixture::base([
@@ -38,12 +29,12 @@ it('throws exception with exact paths when fields missing', function () {
     } catch (PayloadValidationException $e) {
         $errors = $e->errors();
         expect($errors)->toHaveKey('model', ['The model field is required.']);
-        expect($errors)->toHaveKey('messages.0.content.0.text', ['The messages.0.content.0.text field is required.']);
+        expect($errors)->toHaveKey('messages.0.content.0.text', ['The messages.0.content.0.text field is required when messages.0.content.0.type is text.']);
     }
 });
 
 it('rejects enums and nested arrays correctly', function () {
-    (new MessagesPayloadValidator())->validate([
+    (new PayloadValidator(MessagesSchema::rules()))->validate([
         'model' => 'claude-3-opus-20240229',
         'messages' => [
             [
@@ -57,7 +48,7 @@ it('rejects enums and nested arrays correctly', function () {
 })->throws(PayloadValidationException::class);
 
 it('enforces optional vs required fields and type coercion', function () {
-    (new MessagesPayloadValidator())->validate([
+    (new PayloadValidator(MessagesSchema::rules()))->validate([
         'model' => 'claude-3-opus-20240229',
         'messages' => [
             [
@@ -70,7 +61,7 @@ it('enforces optional vs required fields and type coercion', function () {
 })->throws(PayloadValidationException::class);
 
 it('fails when schema evolves with new required field', function () {
-    $validator = new MessagesPayloadValidator(
+    $validator = new PayloadValidator(
         array_merge(MessagesSchema::rules(), ['metadata.trace_id' => ['required', 'uuid']])
     );
 

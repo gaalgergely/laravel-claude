@@ -4,14 +4,14 @@ namespace GergelyGaal\LaravelClaude\Schemas;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 
-final class CountMessageTokensSchema
+final class CountMessageTokensSchema extends SchemaAbstract implements SchemaInterface
 {
     public static function rules(): array
     {
         $roleEnum = implode(',', array_map(fn (Role $role) => $role->value, Role::cases()));
 
         return [
-            'model' => ['required', 'string', 'starts_with:claude-'],
+            'model' => ['nullable', 'string', 'starts_with:claude-'],
             'system' => ['nullable', 'string'],
             'messages' => ['required', 'array', 'min:1'],
             'messages.*.role' => ['required', 'string', "in:{$roleEnum}"],
@@ -37,6 +37,15 @@ final class CountMessageTokensSchema
             'messages.*.content.*.source.url' => ['required_if:messages.*.content.*.source.type,url', 'string', 'active_url'],
             'messages.*.content.*.source.media_type' => ['required_if:messages.*.content.*.source.type,base64', 'string', 'in:image/jpeg,image/png,image/gif,image/webp'],
             'messages.*.content.*.source.data' => ['required_if:messages.*.content.*.source.type,base64', 'string'],
+        ];
+    }
+
+    public static function defaults(): array
+    {
+        parent::defaults();
+        return [
+            'model' => static::$config['model'],
+            'temperature' => static::$config['temperature'],
         ];
     }
 }
