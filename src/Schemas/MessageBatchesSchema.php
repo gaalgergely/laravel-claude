@@ -4,15 +4,11 @@ namespace GergelyGaal\LaravelClaude\Schemas;
 
 use GergelyGaal\LaravelClaude\Enums\Role;
 
-final class MessageBatchesSchema implements SchemaInterface
+final class MessageBatchesSchema extends SchemaAbstract implements SchemaInterface
 {
     public static function rules(): array
     {
         $roleEnum = implode(',', array_map(fn (Role $role) => $role->value, Role::cases()));
-
-        /**
-         * @todo use base messages rules, so fix duplicated code fragment
-         */
 
         return [
             'requests.*.custom_id' => ['required', 'string', 'distinct'],
@@ -44,8 +40,19 @@ final class MessageBatchesSchema implements SchemaInterface
             'requests.*.params.messages.*.content.*.source.media_type' => ['required_if:messages.*.content.*.source.type,base64', 'string', 'in:image/jpeg,image/png,image/gif,image/webp'],
             'requests.*.params.messages.*.content.*.source.data' => ['required_if:messages.*.content.*.source.type,base64', 'string'],
             'requests.*.params.max_tokens' => ['required', 'integer', 'min:1'],
-            'requests.*.params.temperature' => ['nullable', 'numeric', 'between:0,1'],
-            'requests.*.params.stream' => ['nullable', 'boolean:strict']
+            'requests.*.params.temperature' => ['required', 'numeric', 'between:0,1'],
+            'requests.*.params.stream' => ['required', 'boolean:strict']
+        ];
+    }
+
+    public static function defaults(): array
+    {
+        parent::defaults();
+        return [
+            'model' => static::$config['model'],
+            'max_tokens' => static::$config['max_tokens'],
+            'temperature' => static::$config['temperature'],
+            'stream' => false
         ];
     }
 }

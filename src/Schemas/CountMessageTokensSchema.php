@@ -11,7 +11,7 @@ final class CountMessageTokensSchema extends SchemaAbstract implements SchemaInt
         $roleEnum = implode(',', array_map(fn (Role $role) => $role->value, Role::cases()));
 
         return [
-            'model' => ['nullable', 'string', 'starts_with:claude-'],
+            'model' => ['required', 'string', 'starts_with:claude-'],
             'system' => ['nullable', 'string'],
             'messages' => ['required', 'array', 'min:1'],
             'messages.*.role' => ['required', 'string', "in:{$roleEnum}"],
@@ -45,7 +45,6 @@ final class CountMessageTokensSchema extends SchemaAbstract implements SchemaInt
         parent::defaults();
         return [
             'model' => static::$config['model'],
-            'temperature' => static::$config['temperature'],
         ];
     }
 }

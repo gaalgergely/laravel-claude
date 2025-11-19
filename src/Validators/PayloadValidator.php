@@ -6,7 +6,7 @@ use GergelyGaal\LaravelClaude\Schemas\SchemaInterface;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Validator;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
-
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 
 final class PayloadValidator
@@ -28,7 +28,7 @@ final class PayloadValidator
     public function validate(array $payload): array
     {
         $schema = $this->schema;
-        $validator = Validator::make(array_merge($payload, $schema::defaults()), $schema::rules());
+        $validator = Validator::make($this->setDefaults($payload, $schema::defaults()), $schema::rules());
 
         // @todo make the message informative
 
@@ -44,5 +44,24 @@ final class PayloadValidator
         }
 
         return $validator->validated();
+    }
+
+    private function setDefaults(array $payload, array $defaults)
+    {
+        if(isset($payload['requests']))
+        {
+            $requests = $payload['requests'];
+            foreach($requests as $index => $request) {
+                foreach($defaults as $key => $default) {
+                    if(empty($request[$key])) {
+                        Arr::add($payload, "requests.$index.params.$key", $default);
+                    }
+                }
+            }
+
+        } else {
+
+            return array_merge($payload, $defaults);
+        }
     }
 }

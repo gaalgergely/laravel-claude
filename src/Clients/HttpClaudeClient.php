@@ -91,7 +91,7 @@ class HttpClaudeClient implements ClaudeClientContract
 
     public function createMessageBatch(array $messageBatch) :array
     {
-        $messageBatch = (new PayloadValidator(MessageBatchesSchema::rules()))->validate($messageBatch);
+        $messageBatch = (new PayloadValidator(MessageBatchesSchema::class))->validate($messageBatch);
         return ($this->client->post('/messages/batches', $messageBatch))->json();
     }
 
