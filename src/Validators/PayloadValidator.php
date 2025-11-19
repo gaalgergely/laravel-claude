@@ -7,7 +7,6 @@ use InvalidArgumentException;
 use Illuminate\Support\Facades\Validator;
 use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
 
 final class PayloadValidator
 {
@@ -30,15 +29,7 @@ final class PayloadValidator
         $schema = $this->schema;
         $validator = Validator::make($this->setDefaults($payload, $schema::defaults()), $schema::rules());
 
-        // @todo make the message informative (422)
-
         if ($validator->fails()) {
-
-            // @todo just for testing
-            Log::error('Claude payload validation failed', [
-                'errors' => $validator->errors()->toArray(),
-                'payload' => $payload,
-            ]);
 
             throw PayloadValidationException::fromValidator($validator);
         }
