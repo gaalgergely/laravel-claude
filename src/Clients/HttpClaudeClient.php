@@ -154,7 +154,7 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function createFile(array $file) : array
     {
-        $file = (new PayloadValidator(FilesSchema::rules()))->validate($file);
+        $file = (new PayloadValidator(FilesSchema::class))->validate($file);
         return ($this->client
             ->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'

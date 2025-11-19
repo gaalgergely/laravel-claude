@@ -2,7 +2,7 @@
 
 namespace GergelyGaal\LaravelClaude\Schemas;
 
-final class FilesSchema implements SchemaInterface
+final class FilesSchema extends SchemaAbstract implements SchemaInterface
 {
     public static function rules(): array
     {
@@ -10,5 +10,10 @@ final class FilesSchema implements SchemaInterface
             'name' => ['required', 'string'],
             'content' => ['required', 'string'],
         ];
+    }
+
+    public static function defaults(): array
+    {
+        return [];
     }
 }
