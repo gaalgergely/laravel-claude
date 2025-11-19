@@ -53,11 +53,16 @@ final class PayloadValidator
             $requests = $payload['requests'];
             foreach($requests as $index => $request) {
                 foreach($defaults as $key => $default) {
-                    if(empty($request[$key])) {
+
+                    if(!isset($request['params'][$key]) || empty($request['params'][$key])) {
                         Arr::add($payload, "requests.$index.params.$key", $default);
                     }
                 }
             }
+
+            dd($payload);
+
+            return $payload;
 
         } else {
 
