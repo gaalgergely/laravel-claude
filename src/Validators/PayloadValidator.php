@@ -30,7 +30,7 @@ final class PayloadValidator
         $schema = $this->schema;
         $validator = Validator::make($this->setDefaults($payload, $schema::defaults()), $schema::rules());
 
-        // @todo make the message informative
+        // @todo make the message informative (422)
 
         if ($validator->fails()) {
 
@@ -52,21 +52,27 @@ final class PayloadValidator
         {
             $requests = $payload['requests'];
             foreach($requests as $index => $request) {
+
                 foreach($defaults as $key => $default) {
 
                     if(!isset($request['params'][$key]) || empty($request['params'][$key])) {
-                        Arr::add($payload, "requests.$index.params.$key", $default);
+
+                        $payload = Arr::add($payload, "requests.$index.params.$key", $default);
                     }
                 }
             }
 
-            dd($payload);
-
-            return $payload;
-
         } else {
 
-            return array_merge($payload, $defaults);
+            $request = $payload;
+            foreach($defaults as $key => $value) {
+
+                if(!isset($request[$key]) || empty($request[$key])) {
+
+                    $payload = Arr::add($payload, $key, $value);
+                }
+            }
         }
+        return $payload;
     }
 }
