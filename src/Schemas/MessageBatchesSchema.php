@@ -11,6 +11,7 @@ final class MessageBatchesSchema extends SchemaAbstract implements SchemaInterfa
         $roleEnum = implode(',', array_map(fn (Role $role) => $role->value, Role::cases()));
 
         return [
+            'requests' => ['required', 'array', 'min:1'],
             'requests.*.custom_id' => ['required', 'string', 'distinct'],
             'requests.*.params' => ['required', 'array'],
             'requests.*.params.model' => ['required', 'string', 'starts_with:claude-'],
