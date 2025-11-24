@@ -63,9 +63,9 @@ class ClaudeService
         return $this->client->createFile($file);
     }
 
-    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null): array
+    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null, ?bool $useBeta = false): array
     {
-        return $this->client->listFiles($afterId, $beforeId, $limit);
+        return $this->client->listFiles($afterId, $beforeId, $limit, $useBeta);
     }
 
     public function getFileMetadata(string $fileId): array

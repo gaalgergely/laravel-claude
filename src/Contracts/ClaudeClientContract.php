@@ -26,7 +26,7 @@ interface ClaudeClientContract
 
     public function createFile(array $file) : array;
 
-    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array;
+    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null, ?bool $useBeta = false) :array;
 
     public function getFileMetadata(string $fileId) :array;
 

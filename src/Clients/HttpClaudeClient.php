@@ -164,9 +164,10 @@ class HttpClaudeClient implements ClaudeClientContract
             ->json();
     }
 
-    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
+    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null, ?bool $useBeta = false) :array
     {
         $params = array_filter([
+            'beta'      => $useBeta ? 'true' : 'false',
             'after_id'  => $afterId,
             'before_id' => $beforeId,
             'limit'     => $limit,
