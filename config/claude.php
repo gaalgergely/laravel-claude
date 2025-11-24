@@ -7,6 +7,6 @@ return [
     'model' => env('CLAUDE_MODEL', 'claude-sonnet-4-5-20250929'),
     'max_tokens' => env('CLAUDE_MAX_TOKENS', 1024),
     'temperature' => env('CLAUDE_TEMPERATURE', 1.0),
-    'timeout' => 15,
-    'retries' => 1,
+    'timeout' => env('CLAUDE_TIMEOUT', 60),
+    'retries' => env('CLAUDE_RETRIES', 1),
 ];
