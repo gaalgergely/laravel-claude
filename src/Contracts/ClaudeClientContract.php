@@ -24,13 +24,13 @@ interface ClaudeClientContract
 
     public function deleteMessageBatch(string $messageBatchId) :array;
 
-    public function createFile(array $file) : array;
+    public function createFile(array $file, ?bool $useBeta = false) : array;
 
     public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null, ?bool $useBeta = false) :array;
 
-    public function getFileMetadata(string $fileId) :array;
+    public function getFileMetadata(string $fileId, ?bool $useBeta = false) :array;
 
-    public function downloadFile(string $fileId) :string;
+    public function downloadFile(string $fileId, ?bool $useBeta = false) :string;
 
-    public function deleteFile(string $fileId) :array;
+    public function deleteFile(string $fileId, ?bool $useBeta = false) :array;
 }

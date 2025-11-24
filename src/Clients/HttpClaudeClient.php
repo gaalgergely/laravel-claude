@@ -152,7 +152,7 @@ class HttpClaudeClient implements ClaudeClientContract
      * @todo test how can i use with Messages(Batch) API
      * @note Files API in beta
      */
-    public function createFile(array $file) : array
+    public function createFile(array $file, ?bool $useBeta = false) : array
     {
         $file = (new PayloadValidator(FilesSchema::class))->validate($file);
         return ($this->client
@@ -174,11 +174,11 @@ class HttpClaudeClient implements ClaudeClientContract
         ]);
 
         return ($this->client->withHeaders([
-                'anthropic-beta' => 'files-api-2025-04-14'
+                //'anthropic-beta' => 'files-api-2025-04-14'
             ])->get('/files', $params))->json();
     }
 
-    public function getFileMetadata(string $fileId) :array
+    public function getFileMetadata(string $fileId, ?bool $useBeta = false) :array
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
@@ -189,14 +189,14 @@ class HttpClaudeClient implements ClaudeClientContract
      * @todo TEST!
      * @see createFile -> downloadable to be TRUE ...
      */
-    public function downloadFile(string $fileId) :string
+    public function downloadFile(string $fileId, ?bool $useBeta = false) :string
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
             ])->get("/files/$fileId/content"))->stream();
     }
 
-    public function deleteFile(string $fileId) :array
+    public function deleteFile(string $fileId, ?bool $useBeta = false) :array
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'

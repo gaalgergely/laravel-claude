@@ -58,9 +58,9 @@ class ClaudeService
         return $this->client->deleteMessageBatch($messageBatchId);
     }
 
-    public function createFile(array $file) : array
+    public function createFile(array $file, ?bool $useBeta = false) : array
     {
-        return $this->client->createFile($file);
+        return $this->client->createFile($file, $useBeta);
     }
 
     public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null, ?bool $useBeta = false): array
@@ -68,18 +68,18 @@ class ClaudeService
         return $this->client->listFiles($afterId, $beforeId, $limit, $useBeta);
     }
 
-    public function getFileMetadata(string $fileId): array
+    public function getFileMetadata(string $fileId, ?bool $useBeta = false): array
     {
-        return $this->client->getFileMetadata($fileId);
+        return $this->client->getFileMetadata($fileId, $useBeta);
     }
 
-    public function downloadFile(string $fileId): string
+    public function downloadFile(string $fileId, ?bool $useBeta = false): string
     {
-        return $this->client->downloadFile($fileId);
+        return $this->client->downloadFile($fileId, $useBeta);
     }
 
-    public function deleteFile(string $fileId): array
+    public function deleteFile(string $fileId, ?bool $useBeta = false): array
     {
-        return $this->client->deleteFile($fileId);
+        return $this->client->deleteFile($fileId, $useBeta);
     }
 }
