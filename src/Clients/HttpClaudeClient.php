@@ -35,7 +35,7 @@ class HttpClaudeClient implements ClaudeClientContract
         // @todo test this part also !!!
         if (isset($messages['stream']) && $messages['stream'] === true) {
 
-            $response = $this->client->withHeaders(['Accept' => 'text/event-stream'])->post('/messages', $messages);
+            $response = $this->client->withHeaders(['Accept' => 'text/event-stream'])->post('/messages', $messages)->throw();
             $resource = StreamWrapper::getResource($response->toPsrResponse()->getBody());
             $result = [];
             try {
