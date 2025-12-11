@@ -16,6 +16,7 @@ use Illuminate\Http\Client\PendingRequest;
 class HttpClaudeClient implements ClaudeClientContract
 {
     private PendingRequest $client;
+    private string $filesBetaVersion;
 
     public function __construct()
     {
@@ -24,6 +25,10 @@ class HttpClaudeClient implements ClaudeClientContract
         if (!is_string($config['api_key'] ?? null)) {
             throw new ApiKeyIsMissingException('The Claude API Key is missing. Please set the CLAUDE_API_KEY env variable.');
         }
+
+        $this->filesBetaVersion = is_string($config['files_beta_version'] ?? null)
+            ? $config['files_beta_version']
+            : 'files-api-2025-04-14';
 
         $this->client = Http::baseUrl($config['base_url'])
             ->withHeaders([
@@ -160,10 +165,7 @@ class HttpClaudeClient implements ClaudeClientContract
     public function createFile(array $file) : array
     {
         $file = (new PayloadValidator(FilesSchema::class))->validate($file);
-        return ($this->client
-            ->withHeaders([
-                'anthropic-beta' => 'files-api-2025-04-14'
-            ])
+        return ($this->withFilesBetaHeader()
             ->attach('file', $file['content'], $file['name'])
             ->post('/files'))
             ->json();
@@ -177,16 +179,12 @@ class HttpClaudeClient implements ClaudeClientContract
             'limit'     => $limit,
         ]);
 
-        return ($this->client->withHeaders([
-                'anthropic-beta' => 'files-api-2025-04-14'
-            ])->get('/files', $params))->json();
+        return ($this->withFilesBetaHeader()->get('/files', $params))->json();
     }
 
     public function getFileMetadata(string $fileId) :array
     {
-        return ($this->client->withHeaders([
-                'anthropic-beta' => 'files-api-2025-04-14'
-            ])->get("/files/$fileId"))->json();
+        return ($this->withFilesBetaHeader()->get("/files/$fileId"))->json();
     }
 
     /**
@@ -195,16 +193,19 @@ class HttpClaudeClient implements ClaudeClientContract
      */
     public function downloadFile(string $fileId) :string
     {
-        return ($this->client->withHeaders([
-                'anthropic-beta' => 'files-api-2025-04-14'
-            ])->get("/files/$fileId/content"))->stream();
+        return ($this->withFilesBetaHeader()->get("/files/$fileId/content"))->body();
     }
 
     public function deleteFile(string $fileId) :array
     {
-        return ($this->client->withHeaders([
-                'anthropic-beta' => 'files-api-2025-04-14'
-            ])->delete("/files/$fileId"))->json();
+        return ($this->withFilesBetaHeader()->delete("/files/$fileId"))->json();
+    }
+
+    private function withFilesBetaHeader() : PendingRequest
+    {
+        return $this->client->withHeaders([
+            'anthropic-beta' => $this->filesBetaVersion,
+        ]);
     }
 }
 

@@ -9,5 +9,6 @@ return [
     'temperature' => env('CLAUDE_TEMPERATURE', 1.0),
     'timeout' => env('CLAUDE_TIMEOUT', 60),
     'retries' => env('CLAUDE_RETRIES', 1),
+    'files_beta_version' => env('CLAUDE_FILES_BETA_VERSION', 'files-api-2025-04-14'),
 ];
 
