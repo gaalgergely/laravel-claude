@@ -7,12 +7,19 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
+    protected function getPackageProviders($app): array
+    {
+        return [
+            ClaudeServiceProvider::class,
+        ];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
         config()->set('claude', require __DIR__.'/../config/claude.php');
-        config()->set('claude.api_key', 'test-key'); // avoids ApiKeyIsMissingException
+        config()->set('claude.api_key', 'test-key');
     }
 }
 
