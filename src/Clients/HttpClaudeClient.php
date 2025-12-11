@@ -55,7 +55,7 @@ class HttpClaudeClient implements ClaudeClientContract
                         break; // anthropic end marker
                     }
 
-                    // other fields (e.g. event:) can be inspected if you need them
+                    // other fields (e.g. event:) can be inspected
                     if (!str_starts_with($line, 'data: ')) {
                         continue;
                     }
