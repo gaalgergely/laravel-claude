@@ -197,7 +197,7 @@ class HttpClaudeClient implements ClaudeClientContract
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
-            ])->get("/files/$fileId/content"))->stream();
+            ])->get("/files/$fileId/content"))->stream(); // ->body() ???
     }
 
     public function deleteFile(string $fileId) :array
