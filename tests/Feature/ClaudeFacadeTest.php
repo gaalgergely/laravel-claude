@@ -11,7 +11,7 @@ it('resolves the Claude facade root from the container', function () {
     expect(app(ClaudeService::class))->toBeInstanceOf(ClaudeService::class);
     expect(Claude::getFacadeRoot())->toBeInstanceOf(ClaudeService::class);
 
-})->skip();
+});
 
 it('can call sendMessages via the facade', function () {
 
@@ -22,5 +22,5 @@ it('can call sendMessages via the facade', function () {
     $response = Claude::sendMessages(MessagesPayloadFixture::base());
 
     expect(data_get($response, 'content.0.text'))->toContain('Hello! How can I help you today?');
-})->skip();
+});
 
