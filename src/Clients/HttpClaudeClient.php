@@ -8,7 +8,6 @@ use GaalGergely\LaravelClaude\Exceptions\ApiKeyIsMissingException;
 use GaalGergely\LaravelClaude\Schemas\CountMessageTokensSchema;
 use GaalGergely\LaravelClaude\Schemas\FilesSchema;
 use GaalGergely\LaravelClaude\Schemas\MessageBatchesSchema;
-use GaalGergely\LaravelClaude\Validators\Files\FilesPayloadValidator;
 use GaalGergely\LaravelClaude\Schemas\MessagesSchema;
 use GaalGergely\LaravelClaude\Validators\PayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
