@@ -1,15 +1,15 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Clients;
+namespace GaalGergely\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
-use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
-use GergelyGaal\LaravelClaude\Schemas\CountMessageTokensSchema;
-use GergelyGaal\LaravelClaude\Schemas\FilesSchema;
-use GergelyGaal\LaravelClaude\Schemas\MessageBatchesSchema;
-use GergelyGaal\LaravelClaude\Validators\Files\FilesPayloadValidator;
-use GergelyGaal\LaravelClaude\Schemas\MessagesSchema;
-use GergelyGaal\LaravelClaude\Validators\PayloadValidator;
+use GaalGergely\LaravelClaude\Contracts\ClaudeClientContract;
+use GaalGergely\LaravelClaude\Schemas\CountMessageTokensSchema;
+use GaalGergely\LaravelClaude\Schemas\FilesSchema;
+use GaalGergely\LaravelClaude\Schemas\MessageBatchesSchema;
+use GaalGergely\LaravelClaude\Validators\Files\FilesPayloadValidator;
+use GaalGergely\LaravelClaude\Schemas\MessagesSchema;
+use GaalGergely\LaravelClaude\Validators\PayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
 
 class HttpClaudeClient implements ClaudeClientContract
@@ -152,7 +152,7 @@ class HttpClaudeClient implements ClaudeClientContract
      * @todo test how can i use with Messages(Batch) API
      * @note Files API in beta
      */
-    public function createFile(array $file, ?bool $useBeta = false) : array
+    public function createFile(array $file) : array
     {
         $file = (new PayloadValidator(FilesSchema::class))->validate($file);
         return ($this->client
@@ -164,21 +164,20 @@ class HttpClaudeClient implements ClaudeClientContract
             ->json();
     }
 
-    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null, ?bool $useBeta = false) :array
+    public function listFiles(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
     {
         $params = array_filter([
-            'beta'      => $useBeta ? 'true' : 'false',
             'after_id'  => $afterId,
             'before_id' => $beforeId,
             'limit'     => $limit,
         ]);
 
         return ($this->client->withHeaders([
-                //'anthropic-beta' => 'files-api-2025-04-14'
+                'anthropic-beta' => 'files-api-2025-04-14'
             ])->get('/files', $params))->json();
     }
 
-    public function getFileMetadata(string $fileId, ?bool $useBeta = false) :array
+    public function getFileMetadata(string $fileId) :array
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
@@ -189,17 +188,18 @@ class HttpClaudeClient implements ClaudeClientContract
      * @todo TEST!
      * @see createFile -> downloadable to be TRUE ...
      */
-    public function downloadFile(string $fileId, ?bool $useBeta = false) :string
+    public function downloadFile(string $fileId) :string
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
             ])->get("/files/$fileId/content"))->stream();
     }
 
-    public function deleteFile(string $fileId, ?bool $useBeta = false) :array
+    public function deleteFile(string $fileId) :array
     {
         return ($this->client->withHeaders([
                 'anthropic-beta' => 'files-api-2025-04-14'
             ])->delete("/files/$fileId"))->json();
     }
 }
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Facades;
+namespace GaalGergely\LaravelClaude\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -21,12 +21,13 @@ use Illuminate\Support\Facades\Facade;
  * @method static string downloadFile(string $fileId)
  * @method static array deleteFile(string $fileId)
  *
- * @see \GergelyGaal\LaravelClaude\Services\ClaudeService
+ * @see \GaalGergely\LaravelClaude\Services\ClaudeService
  */
 class Claude extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \GergelyGaal\LaravelClaude\Services\ClaudeService::class;
+        return \GaalGergely\LaravelClaude\Services\ClaudeService::class;
     }
 }
+

@@ -1,11 +1,11 @@
 <?php
 
-use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
-use GergelyGaal\LaravelClaude\Enums\Role;
-use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
-use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
-use GergelyGaal\LaravelClaude\Schemas\MessagesSchema;
-use GergelyGaal\LaravelClaude\Validators\PayloadValidator;
+use GaalGergely\LaravelClaude\Clients\HttpClaudeClient;
+use GaalGergely\LaravelClaude\Enums\Role;
+use GaalGergely\LaravelClaude\Exceptions\PayloadValidationException;
+use GaalGergely\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
+use GaalGergely\LaravelClaude\Schemas\MessagesSchema;
+use GaalGergely\LaravelClaude\Validators\PayloadValidator;
 
 it('throws exception with exact paths when fields missing', function () {
     $client = new HttpClaudeClient(new PayloadValidator(MessagesSchema::class), 'key');
@@ -57,3 +57,4 @@ it('enforces optional vs required fields and type coercion', function () {
         'max_tokens' => 'invalid',
     ]);
 })->throws(PayloadValidationException::class);
+

@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Http;
-use GergelyGaal\LaravelClaude\Facades\Claude;
-use GergelyGaal\LaravelClaude\Services\ClaudeService;
-use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
-use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
+use GaalGergely\LaravelClaude\Facades\Claude;
+use GaalGergely\LaravelClaude\Services\ClaudeService;
+use GaalGergely\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
+use GaalGergely\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
 
 it('resolves the Claude facade root from the container', function () {
 
@@ -23,3 +23,4 @@ it('can call sendMessages via the facade', function () {
 
     expect(data_get($response, 'content.0.text'))->toContain('Hello! How can I help you today?');
 })->skip();
+

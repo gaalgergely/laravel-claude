@@ -1,11 +1,11 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Validators;
+namespace GaalGergely\LaravelClaude\Validators;
 
-use GergelyGaal\LaravelClaude\Schemas\SchemaInterface;
+use GaalGergely\LaravelClaude\Schemas\SchemaInterface;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Validator;
-use GergelyGaal\LaravelClaude\Exceptions\PayloadValidationException;
+use GaalGergely\LaravelClaude\Exceptions\PayloadValidationException;
 use Illuminate\Support\Arr;
 
 final class PayloadValidator
@@ -67,3 +67,4 @@ final class PayloadValidator
         return $payload;
     }
 }
+

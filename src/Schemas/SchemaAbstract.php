@@ -1,5 +1,5 @@
 <?php
-namespace GergelyGaal\LaravelClaude\Schemas;
+namespace GaalGergely\LaravelClaude\Schemas;
 
 abstract class SchemaAbstract
 {
@@ -17,3 +17,4 @@ abstract class SchemaAbstract
         static::boot();
     }
 }
+

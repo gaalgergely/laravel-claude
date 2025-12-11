@@ -13,7 +13,7 @@
 
 // uses(Tests\TestCase::class)->in('Feature');
 
-use GergelyGaal\LaravelClaude\Tests\TestCase;
+use GaalGergely\LaravelClaude\Tests\TestCase;
 uses(TestCase::class)->in(__DIR__);
 
 /*
@@ -46,3 +46,4 @@ function something()
 {
     // ..
 }
+

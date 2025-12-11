@@ -1,6 +1,6 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Exceptions;
+namespace GaalGergely\LaravelClaude\Exceptions;
 
 use Exception;
 
@@ -8,3 +8,4 @@ class ApiKeyIsMissingException extends Exception
 {
     //
 }
+

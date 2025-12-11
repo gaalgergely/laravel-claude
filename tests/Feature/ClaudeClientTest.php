@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Http;
-use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
-use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
-use GergelyGaal\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
+use GaalGergely\LaravelClaude\Clients\HttpClaudeClient;
+use GaalGergely\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
+use GaalGergely\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
 
 it('executes HTTP for valid payload', function () {
 
@@ -40,3 +40,4 @@ it('handles retries and timeouts', function () {
 
     expect(data_get($client->sendMessages(MessagesPayloadFixture::base()), 'content.0.text'))->toBe('Recovered');
 })->skip();
+

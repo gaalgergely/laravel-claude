@@ -1,11 +1,11 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude;
+namespace GaalGergely\LaravelClaude;
 
-use GergelyGaal\LaravelClaude\Clients\HttpClaudeClient;
-use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
-use GergelyGaal\LaravelClaude\Exceptions\ApiKeyIsMissingException;
-use GergelyGaal\LaravelClaude\Services\ClaudeService;
+use GaalGergely\LaravelClaude\Clients\HttpClaudeClient;
+use GaalGergely\LaravelClaude\Contracts\ClaudeClientContract;
+use GaalGergely\LaravelClaude\Exceptions\ApiKeyIsMissingException;
+use GaalGergely\LaravelClaude\Services\ClaudeService;
 use Illuminate\Support\ServiceProvider;
 
 class ClaudeServiceProvider extends ServiceProvider
@@ -36,3 +36,4 @@ class ClaudeServiceProvider extends ServiceProvider
         ], 'claude');
     }
 }
+

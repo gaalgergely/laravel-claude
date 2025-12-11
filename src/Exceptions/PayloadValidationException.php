@@ -1,6 +1,6 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Exceptions;
+namespace GaalGergely\LaravelClaude\Exceptions;
 
 use Illuminate\Support\MessageBag;
 use RuntimeException;
@@ -43,3 +43,4 @@ final class PayloadValidationException extends RuntimeException
         return new MessageBag($this->errors);
     }
 }
+

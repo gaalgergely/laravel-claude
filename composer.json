@@ -15,13 +15,13 @@
   },
   "autoload": {
     "psr-4": {
-      "GergelyGaal\\LaravelClaude\\": "src/"
+      "GaalGergely\\LaravelClaude\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "GergelyGaal\\LaravelClaude\\Tests\\": "tests/",
-      "GergelyGaal\\LaravelClaude\\Fixtures\\":  "tests/Fixtures/"
+      "GaalGergely\\LaravelClaude\\Tests\\": "tests/",
+      "GaalGergely\\LaravelClaude\\Fixtures\\":  "tests/Fixtures/"
     }
   },
   "scripts": {
@@ -32,7 +32,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "GergelyGaal\\LaravelClaude\\ClaudeServiceProvider"
+        "GaalGergely\\LaravelClaude\\ClaudeServiceProvider"
       ]
     }
   },

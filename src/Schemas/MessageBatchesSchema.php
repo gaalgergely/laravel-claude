@@ -1,8 +1,8 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Schemas;
+namespace GaalGergely\LaravelClaude\Schemas;
 
-use GergelyGaal\LaravelClaude\Enums\Role;
+use GaalGergely\LaravelClaude\Enums\Role;
 
 final class MessageBatchesSchema extends SchemaAbstract implements SchemaInterface
 {
@@ -57,3 +57,4 @@ final class MessageBatchesSchema extends SchemaAbstract implements SchemaInterfa
         ];
     }
 }
+

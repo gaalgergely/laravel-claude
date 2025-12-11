@@ -1,8 +1,8 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Fixtures\Messages;
+namespace GaalGergely\LaravelClaude\Fixtures\Messages;
 
-use GergelyGaal\LaravelClaude\Enums\Role;
+use GaalGergely\LaravelClaude\Enums\Role;
 
 final class MessagesPayloadFixture
 {
@@ -31,3 +31,4 @@ final class MessagesPayloadFixture
         return array_replace_recursive($payload, $overrides);
     }
 }
+

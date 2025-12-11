@@ -1,8 +1,8 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Services;
+namespace GaalGergely\LaravelClaude\Services;
 
-use GergelyGaal\LaravelClaude\Contracts\ClaudeClientContract;
+use GaalGergely\LaravelClaude\Contracts\ClaudeClientContract;
 
 class ClaudeService
 {
@@ -83,3 +83,4 @@ class ClaudeService
         return $this->client->deleteFile($fileId, $useBeta);
     }
 }
+

@@ -1,8 +1,8 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Tests;
+namespace GaalGergely\LaravelClaude\Tests;
 
-use GergelyGaal\LaravelClaude\ClaudeServiceProvider;
+use GaalGergely\LaravelClaude\ClaudeServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -15,3 +15,4 @@ class TestCase extends Orchestra
         config()->set('claude.api_key', 'test-key'); // avoids ApiKeyIsMissingException
     }
 }
+

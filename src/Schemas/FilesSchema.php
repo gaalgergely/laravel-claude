@@ -1,6 +1,6 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Schemas;
+namespace GaalGergely\LaravelClaude\Schemas;
 
 final class FilesSchema extends SchemaAbstract implements SchemaInterface
 {
@@ -17,3 +17,4 @@ final class FilesSchema extends SchemaAbstract implements SchemaInterface
         return [];
     }
 }
+

@@ -1,5 +1,5 @@
 <?php
-namespace GergelyGaal\LaravelClaude\Enums;
+namespace GaalGergely\LaravelClaude\Enums;
 
 enum Role: string
 {
@@ -7,3 +7,4 @@ enum Role: string
     case SYSTEM = 'system';
     case ASSISTANT = 'assistant';
 }
+

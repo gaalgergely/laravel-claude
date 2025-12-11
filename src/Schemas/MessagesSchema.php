@@ -1,8 +1,8 @@
 <?php
 
-namespace GergelyGaal\LaravelClaude\Schemas;
+namespace GaalGergely\LaravelClaude\Schemas;
 
-use GergelyGaal\LaravelClaude\Enums\Role;
+use GaalGergely\LaravelClaude\Enums\Role;
 
 final class MessagesSchema extends SchemaAbstract implements SchemaInterface
 {
@@ -54,3 +54,4 @@ final class MessagesSchema extends SchemaAbstract implements SchemaInterface
         ];
     }
 }
+
