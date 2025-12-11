@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Http;
 use GaalGergely\LaravelClaude\Clients\HttpClaudeClient;
 use GaalGergely\LaravelClaude\Fixtures\Messages\MessagesPayloadFixture;
 use GaalGergely\LaravelClaude\Fixtures\Messages\MessagesResponseFixture;
+use Illuminate\Support\Facades\Config;
 
 it('executes HTTP for valid payload', function () {
 
@@ -27,10 +28,9 @@ it('returns generated text from Claude', function () {
     expect(data_get($response, 'content.0.text'))->toContain('Hello! How can I help you today?');
 });
 
-/**
- * @todo fix this ...
- */
 it('handles retries and timeouts', function () {
+
+    Config::set('claude.retries', 2);
 
     Http::fakeSequence()
         ->pushStatus(500)
