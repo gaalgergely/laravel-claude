@@ -11,10 +11,11 @@ use GaalGergely\LaravelClaude\Schemas\MessageBatchesSchema;
 use GaalGergely\LaravelClaude\Schemas\MessagesSchema;
 use GaalGergely\LaravelClaude\Validators\PayloadValidator;
 use GuzzleHttp\Psr7\StreamWrapper;
+use Illuminate\Http\Client\PendingRequest;
 
 class HttpClaudeClient implements ClaudeClientContract
 {
-    private $client;
+    private PendingRequest $client;
 
     public function __construct()
     {
