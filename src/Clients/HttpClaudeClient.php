@@ -4,6 +4,7 @@ namespace GaalGergely\LaravelClaude\Clients;
 
 use Illuminate\Support\Facades\Http;
 use GaalGergely\LaravelClaude\Contracts\ClaudeClientContract;
+use GaalGergely\LaravelClaude\Exceptions\ApiKeyIsMissingException;
 use GaalGergely\LaravelClaude\Schemas\CountMessageTokensSchema;
 use GaalGergely\LaravelClaude\Schemas\FilesSchema;
 use GaalGergely\LaravelClaude\Schemas\MessageBatchesSchema;
@@ -19,6 +20,10 @@ class HttpClaudeClient implements ClaudeClientContract
     public function __construct()
     {
         $config = config('claude');
+
+        if (!is_string($config['api_key'] ?? null)) {
+            throw new ApiKeyIsMissingException('The Claude API Key is missing. Please set the CLAUDE_API_KEY env variable.');
+        }
 
         $this->client = Http::baseUrl($config['base_url'])
             ->withHeaders([

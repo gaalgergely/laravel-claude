@@ -4,7 +4,6 @@ namespace GaalGergely\LaravelClaude;
 
 use GaalGergely\LaravelClaude\Clients\HttpClaudeClient;
 use GaalGergely\LaravelClaude\Contracts\ClaudeClientContract;
-use GaalGergely\LaravelClaude\Exceptions\ApiKeyIsMissingException;
 use GaalGergely\LaravelClaude\Services\ClaudeService;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,11 +12,6 @@ class ClaudeServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/claude.php', 'claude');
-
-        $apiKey = config('claude.api_key');
-        if (!is_string($apiKey)) {
-            throw new ApiKeyIsMissingException('The Claude API Key is missing. Please set the CLAUDE_API_KEY env variable.');
-        }
 
         $this->app->bind(
             ClaudeClientContract::class,
