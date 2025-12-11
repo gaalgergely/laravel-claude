@@ -39,5 +39,5 @@ it('handles retries and timeouts', function () {
     $client = new HttpClaudeClient();
 
     expect(data_get($client->sendMessages(MessagesPayloadFixture::base()), 'content.0.text'))->toBe('Recovered');
-})->skip();
+})->only();
 
