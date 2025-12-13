@@ -173,9 +173,18 @@ class HttpClaudeClient implements ClaudeClientContract
         return ($this->clientWithBetaHeader()->get("/files/$fileId"))->json();
     }
 
-    public function downloadFile(string $fileId) :string
+    public function downloadFile(string $fileId) :string|array
     {
-        return ($this->clientWithBetaHeader()->get("/files/$fileId/content"))->body();
+        $response = $this->clientWithBetaHeader()->get("/files/$fileId/content");
+        $contentType = $response->header('Content-Type', '');
+        if (str_contains($contentType, 'json')) {
+
+            return $response->json();
+
+        } else {
+
+            return $response->body();
+        }
     }
 
     public function deleteFile(string $fileId) :array

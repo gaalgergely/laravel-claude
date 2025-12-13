@@ -73,7 +73,7 @@ class ClaudeService
         return $this->client->getFileMetadata($fileId);
     }
 
-    public function downloadFile(string $fileId): string
+    public function downloadFile(string $fileId): string|array
     {
         return $this->client->downloadFile($fileId);
     }

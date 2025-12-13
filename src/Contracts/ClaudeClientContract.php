@@ -30,7 +30,7 @@ interface ClaudeClientContract
 
     public function getFileMetadata(string $fileId) :array;
 
-    public function downloadFile(string $fileId) :string;
+    public function downloadFile(string $fileId) :string|array;
 
     public function deleteFile(string $fileId) :array;
 }
