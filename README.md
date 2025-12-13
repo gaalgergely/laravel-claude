@@ -113,7 +113,7 @@ $previousPage = Claude::listModels(beforeId: data_get($models, 'first_id'));
 
 ### Message batches
 
-Reference: [Message Batches API](https://platform.claude.com/docs/en/api/message_batches)
+Reference: [Message Batches API](https://platform.claude.com/docs/en/api/messages/batches)
 
 ```php
 $batch = Claude::createMessageBatch([
