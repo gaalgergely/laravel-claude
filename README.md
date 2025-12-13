@@ -51,7 +51,7 @@ Access the service through the `Claude` facade or via dependency injection.
 
 ### Quick message example
 
-Reference: [Claude Messages API](https://platform.claude.com/docs/en/api/messages/overview)
+Reference: [Claude Messages API](https://platform.claude.com/docs/en/api/messages)
 
 ```php
 use GaalGergely\LaravelClaude\Facades\Claude;
@@ -69,7 +69,7 @@ $text = data_get($response, 'content.0.text');
 
 ### Streaming responses
 
-Reference: [Claude Messages Streaming](https://platform.claude.com/docs/en/api/messages/streaming)
+Reference: [Claude Messages Streaming](https://platform.claude.com/docs/en/build-with-claude/streaming)
 
 ```php
 $events = Claude::sendMessages([
@@ -100,7 +100,7 @@ $tokenCount = $result['input_tokens'] ?? null;
 
 ### Querying models
 
-Reference: [Models API](https://platform.claude.com/docs/en/api/models/overview)
+Reference: [Models API](https://platform.claude.com/docs/en/api/models)
 
 ```php
 $models = Claude::listModels(limit: 20);
@@ -113,7 +113,7 @@ $previousPage = Claude::listModels(beforeId: data_get($models, 'first_id'));
 
 ### Message batches
 
-Reference: [Message Batches API](https://platform.claude.com/docs/en/api/message_batches/overview)
+Reference: [Message Batches API](https://platform.claude.com/docs/en/api/message_batches)
 
 ```php
 $batch = Claude::createMessageBatch([
@@ -139,7 +139,7 @@ $olderBatches = Claude::listMessageBatches(afterId: data_get($batches, 'last_id'
 
 ### File operations
 
-Reference: [Files API](https://platform.claude.com/docs/en/api/files/overview)
+Reference: [Files API](https://platform.claude.com/docs/en/api/files)
 
 ```php
 $file = Claude::createFile([
