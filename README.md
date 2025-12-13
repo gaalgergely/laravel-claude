@@ -139,7 +139,7 @@ $olderBatches = Claude::listMessageBatches(afterId: data_get($batches, 'last_id'
 
 ### File operations
 
-Reference: [Files API](https://platform.claude.com/docs/en/api/files)
+Reference: [Files API](https://platform.claude.com/docs/en/api/beta/files)
 
 ```php
 $file = Claude::createFile([
