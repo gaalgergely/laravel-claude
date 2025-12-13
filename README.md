@@ -97,6 +97,10 @@ $tokenCount = $result['input_tokens'] ?? null;
 ```php
 $models = Claude::listModels(limit: 20);
 $opus = Claude::getModel('claude-3-opus-20240229');
+
+// Paginate forward or backward with cursor-style parameters
+$nextPage = Claude::listModels(afterId: data_get($models, 'last_id'));
+$previousPage = Claude::listModels(beforeId: data_get($models, 'first_id'));
 ```
 
 ### Message batches
@@ -117,6 +121,10 @@ $batch = Claude::createMessageBatch([
 
 $status = Claude::retrieveMessageBatch($batch['id']);
 $results = Claude::retrieveMessageBatchResults($batch['id']);
+
+// List batches with cursor pagination
+$batches = Claude::listMessageBatches(limit: 10);
+$olderBatches = Claude::listMessageBatches(afterId: data_get($batches, 'last_id'));
 ```
 
 ### File operations
@@ -131,6 +139,9 @@ $files = Claude::listFiles();
 $metadata = Claude::getFileMetadata($file['id']);
 $content = Claude::downloadFile($file['id']);
 Claude::deleteFile($file['id']);
+
+// Use cursor-style pagination to browse more files
+$moreFiles = Claude::listFiles(afterId: data_get($files, 'last_id'), limit: 20);
 ```
 
 ## Validation and error handling
