@@ -114,47 +114,6 @@ $responseWithImageUrl = Claude::sendMessages([
         ],
     ],
 ]);
-
-// Upload two files, then reference them in a quick message
-$firstFile = Claude::createFile([
-    'name' => 'policies.pdf',
-    'content' => Storage::get('policies.pdf'),
-]);
-
-$secondFile = Claude::createFile([
-    'name' => 'notes.txt',
-    'content' => "Team meeting notes...",
-]);
-
-$responseWithAttachments = Claude::sendMessages([
-    'model' => 'claude-sonnet-4.5-20250929',
-    'max_tokens' => 1024,
-    'attachments' => [
-        [
-            'file_id' => $firstFile['id'],
-            'tools' => [
-                ['type' => 'file_search'],
-            ],
-        ],
-        [
-            'file_id' => $secondFile['id'],
-            'tools' => [
-                ['type' => 'file_search'],
-            ],
-        ],
-    ],
-    'messages' => [
-        [
-            'role' => 'user',
-            'content' => [
-                [
-                    'type' => 'text',
-                    'text' => 'Summarize the attached files and list any action items.',
-                ],
-            ],
-        ],
-    ],
-]);
 ```
 
 ### Streaming responses
