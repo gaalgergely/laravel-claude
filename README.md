@@ -65,6 +65,96 @@ $response = Claude::sendMessages([
 
 // Plain text reply
 $text = data_get($response, 'content.0.text');
+
+// Send an image using base64 content
+$responseWithUploadedImage = Claude::sendMessages([
+    'model' => 'claude-sonnet-4.5-20250929',
+    'max_tokens' => 1024,
+    'messages' => [
+        [
+            'role' => 'user',
+            'content' => [
+                [
+                    'type' => 'image',
+                    'source' => [
+                        'type' => 'base64',
+                        'media_type' => 'image/jpeg', // image/png, image/gif, image/webp
+                        'data' => base64_encode(Storage::get('cat.jpg')),
+                    ],
+                ],
+                [
+                    'type' => 'text',
+                    'text' => 'What is in the image above?',
+                ],
+            ],
+        ],
+    ],
+]);
+
+// Send an image by URL
+$responseWithImageUrl = Claude::sendMessages([
+    'model' => 'claude-sonnet-4.5-20250929',
+    'max_tokens' => 1024,
+    'messages' => [
+        [
+            'role' => 'user',
+            'content' => [
+                [
+                    'type' => 'image',
+                    'source' => [
+                        'type' => 'url',
+                        'url' => 'https://d2ph5hv9wocr4u.cloudfront.net/06/cat1589.jpg',
+                    ],
+                ],
+                [
+                    'type' => 'text',
+                    'text' => 'What is in the image above?',
+                ],
+            ],
+        ],
+    ],
+]);
+
+// Upload two files, then reference them in a quick message
+$firstFile = Claude::createFile([
+    'name' => 'policies.pdf',
+    'content' => Storage::get('policies.pdf'),
+]);
+
+$secondFile = Claude::createFile([
+    'name' => 'notes.txt',
+    'content' => "Team meeting notes...",
+]);
+
+$responseWithAttachments = Claude::sendMessages([
+    'model' => 'claude-sonnet-4.5-20250929',
+    'max_tokens' => 1024,
+    'attachments' => [
+        [
+            'file_id' => $firstFile['id'],
+            'tools' => [
+                ['type' => 'file_search'],
+            ],
+        ],
+        [
+            'file_id' => $secondFile['id'],
+            'tools' => [
+                ['type' => 'file_search'],
+            ],
+        ],
+    ],
+    'messages' => [
+        [
+            'role' => 'user',
+            'content' => [
+                [
+                    'type' => 'text',
+                    'text' => 'Summarize the attached files and list any action items.',
+                ],
+            ],
+        ],
+    ],
+]);
 ```
 
 ### Streaming responses
