@@ -34,7 +34,7 @@ return [
     'temperature' => env('CLAUDE_TEMPERATURE', 1.0),
     'timeout' => env('CLAUDE_TIMEOUT', 60),
     'retries' => env('CLAUDE_RETRIES', 1),
-    'anthropic-beta' => env('CLAUDE_ANTROPHIC_BETA', 'files-api-2025-04-14'),
+    'anthropic-beta' => env('CLAUDE_ANTHROPIC_BETA', 'files-api-2025-04-14'),
 ];
 ```
 
