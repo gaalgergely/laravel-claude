@@ -49,7 +49,7 @@ Key environment variables:
 
 Access the service through the `Claude` facade or via dependency injection.
 
-### Quick message example
+### Quick message examples
 
 Reference: [Claude Messages API](https://platform.claude.com/docs/en/api/messages)
 
