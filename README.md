@@ -43,7 +43,7 @@ Key environment variables:
 - `CLAUDE_API_KEY` (required)
 - `CLAUDE_MODEL`, `CLAUDE_MAX_TOKENS`, `CLAUDE_TEMPERATURE` – defaults that validation fills in when missing fields are allowed.
 - `CLAUDE_TIMEOUT`, `CLAUDE_RETRIES` – HTTP client tuning.
-- `CLAUDE_ANTROPHIC_BETA` – beta header required for the Files API.
+- `CLAUDE_ANTHROPIC_BETA` – beta header required for the Files API.
 
 ## Usage
 
