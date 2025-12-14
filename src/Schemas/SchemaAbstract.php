@@ -12,7 +12,7 @@ abstract class SchemaAbstract
         }
     }
 
-    public static function defaults()
+    public static function initDefaults()
     {
         static::boot();
     }

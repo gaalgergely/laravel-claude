@@ -69,13 +69,13 @@ class HttpClaudeClient implements ClaudeClientContract
             }
         }
 
-        return ($this->client->post('/messages', $messages))->json();
+        return ($this->client->post('/messages', $messages))->throw()->json();
     }
 
     public function countMessageTokens(array $messages)  :array
     {
         $messages = (new PayloadValidator(CountMessageTokensSchema::class))->validate($messages);
-        return ($this->client->post('/messages/count_tokens', $messages))->json();
+        return ($this->client->post('/messages/count_tokens', $messages))->throw()->json();
     }
 
     public function listModels(?string $afterId = null, ?string $beforeId = null, ?int $limit = null) :array
@@ -86,28 +86,28 @@ class HttpClaudeClient implements ClaudeClientContract
             'limit'     => $limit,
         ]);
 
-        return ($this->client->get('/models', $params))->json();
+        return ($this->client->get('/models', $params))->throw()->json();
     }
 
     public function getModel(string $model) :array
     {
-        return ($this->client->get("/models/$model"))->json();
+        return ($this->client->get("/models/$model"))->throw()->json();
     }
 
     public function createMessageBatch(array $messageBatch) :array
     {
         $messageBatch = (new PayloadValidator(MessageBatchesSchema::class))->validate($messageBatch);
-        return ($this->client->post('/messages/batches', $messageBatch))->json();
+        return ($this->client->post('/messages/batches', $messageBatch))->throw()->json();
     }
 
     public function retrieveMessageBatch(string $messageBatchId) :array
     {
-        return ($this->client->get("/messages/batches/$messageBatchId"))->json();
+        return ($this->client->get("/messages/batches/$messageBatchId"))->throw()->json();
     }
 
     public function retrieveMessageBatchResults(string $messageBatchId) :array
     {
-        $response = $this->client->get("/messages/batches/$messageBatchId/results");
+        $response = $this->client->get("/messages/batches/$messageBatchId/results")->throw();
         $stream = $response->toPsrResponse()->getBody();
         $resource  = StreamWrapper::getResource($stream);
         $result = [];
@@ -135,17 +135,17 @@ class HttpClaudeClient implements ClaudeClientContract
             'limit'     => $limit,
         ]);
 
-        return ($this->client->get('/messages/batches', $params))->json();
+        return ($this->client->get('/messages/batches', $params))->throw()->json();
     }
 
     public function cancelMessageBatch(string $messageBatchId): array
     {
-        return ($this->client->post("/messages/batches/$messageBatchId/cancel"))->json();
+        return ($this->client->post("/messages/batches/$messageBatchId/cancel"))->throw()->json();
     }
 
     public function deleteMessageBatch(string $messageBatchId) :array
     {
-        return ($this->client->delete("/messages/batches/$messageBatchId"))->json();
+        return ($this->client->delete("/messages/batches/$messageBatchId"))->throw()->json();
     }
 
     public function createFile(array $file) : array
@@ -154,6 +154,7 @@ class HttpClaudeClient implements ClaudeClientContract
         return ($this->clientWithBetaHeader()
             ->attach('file', $file['content'], $file['name'])
             ->post('/files'))
+            ->throw()
             ->json();
     }
 
@@ -165,17 +166,17 @@ class HttpClaudeClient implements ClaudeClientContract
             'limit'     => $limit,
         ]);
 
-        return ($this->clientWithBetaHeader()->get('/files', $params))->json();
+        return ($this->clientWithBetaHeader()->get('/files', $params))->throw()->json();
     }
 
     public function getFileMetadata(string $fileId) :array
     {
-        return ($this->clientWithBetaHeader()->get("/files/$fileId"))->json();
+        return ($this->clientWithBetaHeader()->get("/files/$fileId"))->throw()->json();
     }
 
     public function downloadFile(string $fileId) :string|array
     {
-        $response = $this->clientWithBetaHeader()->get("/files/$fileId/content");
+        $response = $this->clientWithBetaHeader()->get("/files/$fileId/content")->throw();
         $contentType = $response->header('Content-Type', '');
         if (str_contains($contentType, 'json')) {
 
@@ -189,7 +190,7 @@ class HttpClaudeClient implements ClaudeClientContract
 
     public function deleteFile(string $fileId) :array
     {
-        return ($this->clientWithBetaHeader()->delete("/files/$fileId"))->json();
+        return ($this->clientWithBetaHeader()->delete("/files/$fileId"))->throw()->json();
     }
 
     private function clientWithBetaHeader() :PendingRequest

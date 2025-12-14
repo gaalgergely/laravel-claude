@@ -42,7 +42,7 @@ final class CountMessageTokensSchema extends SchemaAbstract implements SchemaInt
 
     public static function defaults(): array
     {
-        parent::defaults();
+        parent::initDefaults();
         return [
             'model' => static::$config['model'],
         ];
