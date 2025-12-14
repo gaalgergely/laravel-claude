@@ -39,7 +39,8 @@ final class MessagesSchema extends SchemaAbstract implements SchemaInterface
             'messages.*.content.*.source.data' => ['required_if:messages.*.content.*.source.type,base64', 'string'],
             'max_tokens' => ['required', 'integer', 'min:1'],
             'temperature' => ['required', 'numeric', 'between:0,1'],
-            'stream' => ['required', 'boolean:strict']
+            'stream' => ['required', 'boolean:strict'],
+            'metadata' => 'nullable'
         ];
     }
 
