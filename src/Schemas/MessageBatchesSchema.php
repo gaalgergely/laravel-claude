@@ -3,6 +3,7 @@
 namespace GaalGergely\LaravelClaude\Schemas;
 
 use GaalGergely\LaravelClaude\Enums\Role;
+use Illuminate\Validation\Rule;
 
 final class MessageBatchesSchema extends SchemaAbstract implements SchemaInterface
 {
@@ -42,7 +43,16 @@ final class MessageBatchesSchema extends SchemaAbstract implements SchemaInterfa
             'requests.*.params.messages.*.content.*.source.data' => ['required_if:requests.*.params.messages.*.content.*.source.type,base64', 'string'],
             'requests.*.params.max_tokens' => ['required', 'integer', 'min:1'],
             'requests.*.params.temperature' => ['required', 'numeric', 'between:0,1'],
-            'requests.*.params.stream' => ['required', 'boolean:strict']
+            'requests.*.params.stream' => ['required', 'boolean:strict'],
+            'requests.*.params.metadata.user_id' => ['nullable', 'string', 'max:256'],
+            'requests.*.params.service_tier' => ['nullable', Rule::in(['auto', 'standard_only'])],
+            'requests.*.params.stop_sequences' => ['nullable', 'array'],
+            'requests.*.params.stop_sequences.*' => ['nullable', 'string'],
+            'requests.*.params.thinking' => ['nullable'],
+            'requests.*.params.tool_choice' => ['nullable'],
+            'requests.*.params.tools' => ['nullable'],
+            'requests.*.params.top_k' => ['nullable', 'min:0'],
+            'requests.*.params.top_p' => ['nullable', 'numeric', 'min:0', 'max:1'],
         ];
     }
 
