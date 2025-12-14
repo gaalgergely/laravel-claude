@@ -3,6 +3,7 @@
 namespace GaalGergely\LaravelClaude\Schemas;
 
 use GaalGergely\LaravelClaude\Enums\Role;
+use Illuminate\Validation\Rule;
 
 final class MessagesSchema extends SchemaAbstract implements SchemaInterface
 {
@@ -40,7 +41,15 @@ final class MessagesSchema extends SchemaAbstract implements SchemaInterface
             'max_tokens' => ['required', 'integer', 'min:1'],
             'temperature' => ['required', 'numeric', 'between:0,1'],
             'stream' => ['required', 'boolean:strict'],
-            'metadata' => 'nullable'
+            'metadata.user_id' => ['nullable', 'string', 'max:256'],
+            'service_tier' => ['nullable', Rule::in(['auto', 'standard_only'])],
+            'stop_sequences' => ['nullable', 'array'],
+            'stop_sequences.*' => ['nullable', 'string'],
+            'thinking' => ['nullable'],
+            'tool_choice' => ['nullable'],
+            'tools' => ['nullable'],
+            'top_k' => ['nullable', 'min:0'],
+            'top_p' => ['nullable', 'numeric', 'min:0', 'max:1'],
         ];
     }
 
