@@ -37,6 +37,9 @@ final class CountMessageTokensSchema extends SchemaAbstract implements SchemaInt
             'messages.*.content.*.source.url' => ['required_if:messages.*.content.*.source.type,url', 'string', 'active_url'],
             'messages.*.content.*.source.media_type' => ['required_if:messages.*.content.*.source.type,base64', 'string', 'in:image/jpeg,image/png,image/gif,image/webp'],
             'messages.*.content.*.source.data' => ['required_if:messages.*.content.*.source.type,base64', 'string'],
+            'thinking' => ['nullable'],
+            'tool_choice' => ['nullable'],
+            'tools' => ['nullable'],
         ];
     }
 
