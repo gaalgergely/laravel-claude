@@ -45,7 +45,7 @@ final class MessagesSchema extends SchemaAbstract implements SchemaInterface
 
     public static function defaults(): array
     {
-        parent::defaults();
+        parent::initDefaults();
         return [
             'model' => static::$config['model'],
             'max_tokens' => static::$config['max_tokens'],
